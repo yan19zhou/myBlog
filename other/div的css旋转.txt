@@ -1,0 +1,61 @@
+
+.left_box .button > li {
+    position: absolute;
+    width: 156px;
+    height: 156px;
+    animation: along 6s linear 0s infinite;
+    -moz-animation: along 6s linear 0s infinite;
+    -webkit-animation: along 6s linear 0s infinite;
+    -o-animation: along 6s linear 0s infinite;
+}
+
+
+    .left_box .button > li > a {
+        display: block;
+        width: 115px;
+        height: 115px;
+        margin: 20px;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 20px;
+        text-align: center;
+        line-height: 24px;
+        padding-top: 32px;
+        letter-spacing: 1px;
+        font-weight: bold;
+        text-shadow: 0 0 10px #007eff, 0 0 10px #007eff;
+        animation: inverse 6s linear 0s infinite;
+        -moz-animation: inverse 6s linear 0s infinite;
+        -webkit-animation: inverse 6s linear 0s infinite;
+        -o-animation: inverse 6s linear 0s infinite;
+    }
+
+    .left_box .button > li:hover,
+    .left_box .button > li:hover > a {
+        -webkit-animation-play-state: paused;
+    }
+
+        .left_box .button > li:hover > a,
+        .left_box .button > li.active > a {
+            text-shadow: 0 0 10px #ffcc00, 0 0 10px #ffcc00;
+        }
+
+@-webkit-keyframes along {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes inverse {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(-360deg);
+    }
+}
