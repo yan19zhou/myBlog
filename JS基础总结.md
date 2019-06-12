@@ -32,6 +32,7 @@
         this.age = age;
         this.getName = function(){
             console.log(this.name)
+            
         }
     }
     var p1 = new Person("liming",22)
