@@ -6,7 +6,7 @@
     animation: along 6s linear 0s infinite;
     -moz-animation: along 6s linear 0s infinite;
     -webkit-animation: along 6s linear 0s infinite;
-    -o-animation: along 6s linear 0s infinite;
+    -o-animation: along 6s linear 0s infinite
 }
 
 
