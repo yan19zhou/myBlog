@@ -1,0 +1,349 @@
+以Northwind为示例数据库，ADO.NET Entity Framework之Linq To Entities
+Select - 选择需要返回的字段
+Where - 筛选
+OrderBy - 正序排序
+OrderByDescending - 倒序排序
+ThenBy - 在 OrderBy 或 OrderByDescending 的基础上再正序排序
+ThenByDescending - 在 OrderBy 或 OrderByDescending 的基础上再倒序排序
+GroupBy - 分组
+Join - 连接
+GroupJoin - 连接后分组
+
+
+示例
+Select
+    using (var ctx = new NorthwindEntities())
+
+        // Select 对应的 Linq 方法
+    var p1 = ctx.Products.Select(p => new { ProductName = "产品名称：" + p.ProductName });
+        p1.ToList();
+
+        // Select 对应的查询语法
+    var p2 = from p in ctx.Products select new { ProductName = "产品名称：" + p.ProductName };
+        p2.ToList();
+    }
+--Select 对应的 sql 语句
+
+    SELECT 
+    1 AS [C1], 
+    N'产品名称：' + [Extent1].[ProductName] AS [C2]
+    FROM [dbo].[Products] AS [Extent1]
+    Where
+    using (var ctx = new NorthwindEntities())
+    {
+        // Where 对应的 Linq 方法
+        var p1 = ctx.Products.Where(p => p.ProductID > 3);
+        p1.ToList();
+
+        // Where 对应的查询语法
+        var p2 = from p in ctx.Products where p.ProductID > 3 select p;
+        p2.ToList();
+    }
+--Where 对应的 sql 语句
+
+SELECT 
+1 AS [C1], 
+[Extent1].[Discontinued] AS [Discontinued], 
+[Extent1].[ProductID] AS [ProductID], 
+[Extent1].[ProductName] AS [ProductName], 
+[Extent1].[QuantityPerUnit] AS [QuantityPerUnit], 
+[Extent1].[ReorderLevel] AS [ReorderLevel], 
+[Extent1].[UnitPrice] AS [UnitPrice], 
+[Extent1].[UnitsInStock] AS [UnitsInStock], 
+[Extent1].[UnitsOnOrder] AS [UnitsOnOrder], 
+[Extent1].[CategoryID] AS [CategoryID], 
+[Extent1].[SupplierID] AS [SupplierID]
+FROM [dbo].[Products] AS [Extent1]
+WHERE [Extent1].[ProductID] > 3
+
+OrderBy
+using (var ctx = new NorthwindEntities())
+{
+    // OrderBy 对应的 Linq 方法
+    var p1 = ctx.Products.OrderBy(p => p.UnitPrice);
+    p1.ToList();
+
+    // OrderBy 对应的查询语法
+    var p2 = from p in ctx.Products orderby p.UnitPrice select p;
+    p2.ToList();
+}
+--OrderBy 对应的 sql 语句
+
+SELECT 
+[Project1].[C1] AS [C1], 
+[Project1].[Discontinued] AS [Discontinued], 
+[Project1].[ProductID] AS [ProductID], 
+[Project1].[ProductName] AS [ProductName], 
+[Project1].[QuantityPerUnit] AS [QuantityPerUnit], 
+[Project1].[ReorderLevel] AS [ReorderLevel], 
+[Project1].[UnitPrice] AS [UnitPrice], 
+[Project1].[UnitsInStock] AS [UnitsInStock], 
+[Project1].[UnitsOnOrder] AS [UnitsOnOrder], 
+[Project1].[CategoryID] AS [CategoryID], 
+[Project1].[SupplierID] AS [SupplierID]
+FROM ( SELECT 
+    [Extent1].[CategoryID] AS [CategoryID], 
+    [Extent1].[Discontinued] AS [Discontinued], 
+    [Extent1].[ProductID] AS [ProductID], 
+    [Extent1].[ProductName] AS [ProductName], 
+    [Extent1].[QuantityPerUnit] AS [QuantityPerUnit], 
+    [Extent1].[ReorderLevel] AS [ReorderLevel], 
+    [Extent1].[SupplierID] AS [SupplierID], 
+    [Extent1].[UnitPrice] AS [UnitPrice], 
+    [Extent1].[UnitsInStock] AS [UnitsInStock], 
+    [Extent1].[UnitsOnOrder] AS [UnitsOnOrder], 
+    1 AS [C1]
+    FROM [dbo].[Products] AS [Extent1]
+)  AS [Project1]
+ORDER BY [Project1].[UnitPrice] ASC
+
+OrderByDescending
+using (var ctx = new NorthwindEntities())
+{
+    // OrderByDescending 对应的 Linq 方法
+    var p1 = ctx.Products.OrderByDescending(p => p.UnitPrice);
+    p1.ToList();
+
+    // OrderByDescending 对应的查询语法
+    var p2 = from p in ctx.Products orderby p.UnitPrice descending select p;
+    p2.ToList();
+}
+--OrderByDescending 对应的 sql 语句
+
+SELECT 
+[Project1].[C1] AS [C1], 
+[Project1].[Discontinued] AS [Discontinued], 
+[Project1].[ProductID] AS [ProductID], 
+[Project1].[ProductName] AS [ProductName], 
+[Project1].[QuantityPerUnit] AS [QuantityPerUnit], 
+[Project1].[ReorderLevel] AS [ReorderLevel], 
+[Project1].[UnitPrice] AS [UnitPrice], 
+[Project1].[UnitsInStock] AS [UnitsInStock], 
+[Project1].[UnitsOnOrder] AS [UnitsOnOrder], 
+[Project1].[CategoryID] AS [CategoryID], 
+[Project1].[SupplierID] AS [SupplierID]
+FROM ( SELECT 
+    [Extent1].[CategoryID] AS [CategoryID], 
+    [Extent1].[Discontinued] AS [Discontinued], 
+    [Extent1].[ProductID] AS [ProductID], 
+    [Extent1].[ProductName] AS [ProductName], 
+    [Extent1].[QuantityPerUnit] AS [QuantityPerUnit], 
+    [Extent1].[ReorderLevel] AS [ReorderLevel], 
+    [Extent1].[SupplierID] AS [SupplierID], 
+    [Extent1].[UnitPrice] AS [UnitPrice], 
+    [Extent1].[UnitsInStock] AS [UnitsInStock], 
+    [Extent1].[UnitsOnOrder] AS [UnitsOnOrder], 
+    1 AS [C1]
+    FROM [dbo].[Products] AS [Extent1]
+)  AS [Project1]
+ORDER BY [Project1].[UnitPrice] DESC
+
+ThenBy
+using (var ctx = new NorthwindEntities())
+{
+    // ThenBy 对应的 Linq 方法
+    var p1 = ctx.Products.OrderBy(p => p.UnitPrice).ThenBy(p => p.ProductID);
+    p1.ToList();
+
+    // ThenBy 对应的查询语法
+    var p2 = from p in ctx.Products orderby p.UnitPrice ascending, p.ProductID ascending select p;
+    p2.ToList();
+}
+--ThenBy 对应的 sql 语句
+
+SELECT 
+[Project1].[C1] AS [C1], 
+[Project1].[Discontinued] AS [Discontinued], 
+[Project1].[ProductID] AS [ProductID], 
+[Project1].[ProductName] AS [ProductName], 
+[Project1].[QuantityPerUnit] AS [QuantityPerUnit], 
+[Project1].[ReorderLevel] AS [ReorderLevel], 
+[Project1].[UnitPrice] AS [UnitPrice], 
+[Project1].[UnitsInStock] AS [UnitsInStock], 
+[Project1].[UnitsOnOrder] AS [UnitsOnOrder], 
+[Project1].[CategoryID] AS [CategoryID], 
+[Project1].[SupplierID] AS [SupplierID]
+FROM ( SELECT 
+    [Extent1].[CategoryID] AS [CategoryID], 
+    [Extent1].[Discontinued] AS [Discontinued], 
+    [Extent1].[ProductID] AS [ProductID], 
+    [Extent1].[ProductName] AS [ProductName], 
+    [Extent1].[QuantityPerUnit] AS [QuantityPerUnit], 
+    [Extent1].[ReorderLevel] AS [ReorderLevel], 
+    [Extent1].[SupplierID] AS [SupplierID], 
+    [Extent1].[UnitPrice] AS [UnitPrice], 
+    [Extent1].[UnitsInStock] AS [UnitsInStock], 
+    [Extent1].[UnitsOnOrder] AS [UnitsOnOrder], 
+    1 AS [C1]
+    FROM [dbo].[Products] AS [Extent1]
+)  AS [Project1]
+ORDER BY [Project1].[UnitPrice] ASC, [Project1].[ProductID] ASC
+
+ThenByDescending
+using (var ctx = new NorthwindEntities())
+{
+    // ThenByDescending 对应的 Linq 方法
+    var p1 = ctx.Products.OrderBy(p => p.UnitPrice).ThenByDescending(p => p.ProductID);
+    p1.ToList();
+
+    // ThenByDescending 对应的查询语法
+    var p2 = from p in ctx.Products orderby p.UnitPrice ascending, p.ProductID descending select p;
+    p2.ToList();
+}
+--ThenByDescending 对应的 sql 语句
+
+SELECT 
+[Project1].[C1] AS [C1], 
+[Project1].[Discontinued] AS [Discontinued], 
+[Project1].[ProductID] AS [ProductID], 
+[Project1].[ProductName] AS [ProductName], 
+[Project1].[QuantityPerUnit] AS [QuantityPerUnit], 
+[Project1].[ReorderLevel] AS [ReorderLevel], 
+[Project1].[UnitPrice] AS [UnitPrice], 
+[Project1].[UnitsInStock] AS [UnitsInStock], 
+[Project1].[UnitsOnOrder] AS [UnitsOnOrder], 
+[Project1].[CategoryID] AS [CategoryID], 
+[Project1].[SupplierID] AS [SupplierID]
+FROM ( SELECT 
+    [Extent1].[CategoryID] AS [CategoryID], 
+    [Extent1].[Discontinued] AS [Discontinued], 
+    [Extent1].[ProductID] AS [ProductID], 
+    [Extent1].[ProductName] AS [ProductName], 
+    [Extent1].[QuantityPerUnit] AS [QuantityPerUnit], 
+    [Extent1].[ReorderLevel] AS [ReorderLevel], 
+    [Extent1].[SupplierID] AS [SupplierID], 
+    [Extent1].[UnitPrice] AS [UnitPrice], 
+    [Extent1].[UnitsInStock] AS [UnitsInStock], 
+    [Extent1].[UnitsOnOrder] AS [UnitsOnOrder], 
+    1 AS [C1]
+    FROM [dbo].[Products] AS [Extent1]
+)  AS [Project1]
+ORDER BY [Project1].[UnitPrice] ASC, [Project1].[ProductID] DESC
+
+GroupBy
+using (var ctx = new NorthwindEntities())
+{
+    // GroupBy 对应的 Linq 方法
+   var p1 = ctx.Products.GroupBy(p => p.Suppliers.SupplierID).Select(g => new { Group = g.Key, Member = g });
+    foreach (var g in p1)
+{
+        // g.Group - 供货商ID，以此分组
+        // g.Member - 某供货商下的所有产品
+        foreach (var m in g.Member)
+        {
+            // code
+        }
+    }
+
+    // GroupBy 对应的查询语法
+var p2 = from p in ctx.Products group p by p.Suppliers.SupplierID into g select new { Group = g.Key, Member = g };
+    foreach (var g in p2)
+  {
+        // g.Group - 供货商ID，以此分组
+        // g.Member - 某供货商下的所有产品
+        foreach (var m in g.Member)
+    {
+            // code
+        }
+    }
+}
+--GroupBy 对应的 sql 语句
+
+SELECT 
+[Project2].[SupplierID] AS [SupplierID], 
+[Project2].[C1] AS [C1], 
+[Project2].[C2] AS [C2], 
+[Project2].[C4] AS [C3], 
+[Project2].[C3] AS [C4], 
+[Project2].[Discontinued] AS [Discontinued], 
+[Project2].[ProductID] AS [ProductID], 
+[Project2].[ProductName] AS [ProductName], 
+[Project2].[QuantityPerUnit] AS [QuantityPerUnit], 
+[Project2].[ReorderLevel] AS [ReorderLevel], 
+[Project2].[UnitPrice] AS [UnitPrice], 
+[Project2].[UnitsInStock] AS [UnitsInStock], 
+[Project2].[UnitsOnOrder] AS [UnitsOnOrder], 
+[Project2].[CategoryID] AS [CategoryID], 
+[Project2].[SupplierID1] AS [SupplierID1]
+FROM ( SELECT 
+    [Distinct1].[SupplierID] AS [SupplierID], 
+    1 AS [C1], 
+    1 AS [C2], 
+    CASE WHEN ([Extent2].[Discontinued] IS NULL) THEN CAST(NULL AS int) ELSE 1 END AS [C3], 
+    [Extent2].[CategoryID] AS [CategoryID], 
+    [Extent2].[Discontinued] AS [Discontinued], 
+    [Extent2].[ProductID] AS [ProductID], 
+    [Extent2].[ProductName] AS [ProductName], 
+    [Extent2].[QuantityPerUnit] AS [QuantityPerUnit], 
+    [Extent2].[ReorderLevel] AS [ReorderLevel], 
+    [Extent2].[SupplierID] AS [SupplierID1], 
+    [Extent2].[UnitPrice] AS [UnitPrice], 
+    [Extent2].[UnitsInStock] AS [UnitsInStock], 
+    [Extent2].[UnitsOnOrder] AS [UnitsOnOrder], 
+    CASE WHEN ([Extent2].[Discontinued] IS NULL) THEN CAST(NULL AS int) ELSE 1 END AS [C4]
+    FROM   (SELECT DISTINCT 
+        [Extent1].[SupplierID] AS [SupplierID]
+        FROM [dbo].[Products] AS [Extent1] ) AS [Distinct1]
+    LEFT OUTER JOIN [dbo].[Products] AS [Extent2] ON ([Extent2].[SupplierID] = [Distinct1].[SupplierID]) OR (([Extent2].[SupplierID] IS NULL) AND ([Distinct1].[SupplierID] IS NULL))
+)  AS [Project2]
+ORDER BY [Project2].[SupplierID] ASC, [Project2].[C4] ASC
+
+Join
+using (var ctx = new NorthwindEntities())
+{
+    // Join 对应的 Linq 方法
+    var p1 = ctx.Products.Join(
+        ctx.Categories,
+        p => p.Categories.CategoryID,
+        c => c.CategoryID,
+      (p, c) => new { c.CategoryName, p.ProductName });
+    p1.ToList();
+
+    // Join 对应的查询语法
+    var p2 = from p in ctx.Products
+             join c in ctx.Categories
+             on p.Categories.CategoryID equals c.CategoryID
+select new { c.CategoryName, p.ProductName };
+    p2.ToList();
+}
+--Join 对应的 sql 语句
+
+SELECT 
+1 AS [C1], 
+[Extent2].[CategoryName] AS [CategoryName], 
+[Extent1].[ProductName] AS [ProductName]
+FROM  [dbo].[Products] AS [Extent1]
+INNER JOIN [dbo].[Categories] AS [Extent2] ON ([Extent1].[CategoryID] = [Extent2].[CategoryID]) OR (([Extent1].[CategoryID] IS NULL) AND ([Extent2].[CategoryID] IS NULL))
+
+GroupJoin
+using (var ctx = new NorthwindEntities())
+{
+    // GroupJoin 对应的 Linq 方法
+    var p1 = ctx.Categories.GroupJoin(
+        ctx.Products,
+        c => c.CategoryID,
+        p => p.Categories.CategoryID,
+   (p, g) => new { p.CategoryName, ProductCount = g.Count() });
+    p1.ToList();
+
+    // GroupJoin 对应的查询语法
+    var p2 = from c in ctx.Categories
+             join p in ctx.Products
+             on c.CategoryID equals p.Categories.CategoryID into g // g - IEnumerable<Products>
+ select new { CategoryName = c.CategoryName, ProductCount = g.Count() };
+    p2.ToList();
+}
+--GroupJoin 对应的 sql 语句
+
+SELECT 
+1 AS [C1], 
+[Project1].[CategoryName] AS [CategoryName], 
+[Project1].[C1] AS [C2]
+FROM ( SELECT 
+    [Extent1].[CategoryName] AS [CategoryName], 
+    (SELECT 
+        COUNT(cast(1 as bit)) AS [A1]
+        FROM [dbo].[Products] AS [Extent2]
+        WHERE ([Extent1].[CategoryID] = [Extent2].[CategoryID]) OR (([Extent1].[CategoryID] IS NULL) AND ([Extent2].[CategoryID] IS NULL))) AS [C1]
+    FROM [dbo].[Categories] AS [Extent1]
+)  AS [Project1]
