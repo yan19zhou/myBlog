@@ -18,6 +18,7 @@ axios.interceptors.request.use(
         return Promise.error(err)
     }
 )
+// 响应拦截器
 axios.interceptors.response.use(
     res => {
         if (res.status == 200) {
