@@ -15,7 +15,6 @@
         ...
       });
 
-
 2.在src/store/modules.js中配置vuex
 
     // 导入vue
@@ -42,28 +41,26 @@
 
 3. src/store/card/index.js (卡功能)
 
-
-      const card = {
-      namespaced: true,
-        /**
+          /**
         * 定义命名空间，防止多个模块同名共享，使用时需要带上命名空间
         */
-      state: {
+        const card = {
+           namespaced: true,
+        state: {
+          cardArr: [],
 
-        cardArr: [],
-
-        },
-        mutations: {
-          addCard(state, obj){
-            state.cardArr.push(obj);
-                }
-              },
-          actions: {
-            addCardFun(store, obj){
-                store.commit('addCard', obj);
+          },
+          mutations: {
+            addCard(state, obj){
+              state.cardArr.push(obj);
+                  }
+                },
+            actions: {
+              addCardFun(store, obj){
+                  store.commit('addCard', obj);
+                  }
                 }
               }
-            }
 
         //导出
         export default card;
