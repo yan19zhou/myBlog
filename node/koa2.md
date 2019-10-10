@@ -7,7 +7,6 @@
         await next();//将要处理的下一个异步函数
         ctx.response.type='text/html';
         ctx.response.body = 'data';
-
     })
 
 ##### koa-router处理URL
