@@ -3,6 +3,8 @@ const path = require('path');
 const url = require('url');
 const fs = require('fs');
 
+const mimeModel = require('./getMime');
+
 http.createServer((req, res) => {
     // 读取文件然后显示到页面
     // 获取请求路径
@@ -25,8 +27,9 @@ http.createServer((req, res) => {
                 res.end();
             })
         } else {
+            let contentType = mimeModel.getMime(extname)
             res.writeHead(200, {
-                "Content-Type": "" + getExtName(extname) + ";charset='utf-8'"
+                "Content-Type": "" + contentType + ";charset='utf-8'"
             })
             res.write(data);
             res.end();
@@ -34,15 +37,3 @@ http.createServer((req, res) => {
     })
 }).listen(8080)
 
-function getExtName(extname) {
-    switch (extname) {
-        case '.html':
-            return 'text/html'
-        case '.css':
-            return 'text/css'
-        case '.js':
-            return 'text/javascript'
-        default:
-            return 'text/html'
-    }
-}

@@ -4,74 +4,74 @@ const fs = require('fs');
 
 // 创建目录
 // params：路径名称，目录权限，默认0777，回调函数
-/* fs.mkdir('css.txt',(err)=>{
+fs.mkdir('css.txt',(err)=>{
     if(err){
         return ;
     }
     console.log("mkdir success")
-}) */
+})
 
 // fs.writeFile 创建写入文件
-/* fs.writeFile('01.txt','yigewenj',(err)=>{
+fs.writeFile('01.txt','yigewenj',(err)=>{
     if(err){
         return ;
     }
     console.log("writeFile success")
-}) */
+})
 
 // fs.appendFile 追加文件
-/* fs.appendFile('01.txt','追加一些内容',(err)=>{
+fs.appendFile('01.txt','追加一些内容',(err)=>{
     if(err){
         return ;
     }
     console.log("appendFile success")
-}) */
+})
 
 // fs.readFile 读取文件
-/* fs.readFile('01.txt',(err,data)=>{
+fs.readFile('01.txt',(err,data)=>{
     if(err){
         return ;
     }
     console.log(data)
-}) */
+})
 
 // fs.readdir 读取目录
-/* fs.readdir('css',(err,data)=>{
+fs.readdir('css',(err,data)=>{
     if(err){
         return ;
     }
     console.log(data)
-}) */
+})
 
 // fs.rename 重命名
-/* fs.rename('01.txt','rename.txt',(err)=>{
+fs.rename('01.txt','rename.txt',(err)=>{
     if(err){
         return ;
     }
     console.log("rename success")
-}) */
+})
 
 // fs.rmdir 删除目录
-/* fs.rmdir('css',(err)=>{
+fs.rmdir('css',(err)=>{
     if(err){
         return ;
     }
     console.log("rmdir success")
-}) */
+})
 
 // fs.unlink 删除文件
-/* fs.unlink('rename.txt',(err)=>{
+fs.unlink('rename.txt',(err)=>{
     if(err){
         return ;
     }
     console.log("unlink success")
-}) */
+})
 
 
 // 一个图片上传的demo、
 
 // 1.判断服务器上面有没有upload目录，没有就创建一个
-/* fs.stat('html', (err, stat) => {
+fs.stat('html', (err, stat) => {
     if (err) {
 
         fs.mkdir('html', (err) => {
@@ -100,14 +100,13 @@ const fs = require('fs');
                 // 因为stat是异步返回，所以采用递归调用
                 readFile(i+1);
             })
-
         })(0)
     })
-}) */
+})
 
 // 通过文件流来读取数据
 
- /*    // 创建一个文件流
+    // 创建一个文件流
     let readStream = fs.createReadStream('html/css/1.txt');
     let str = '';
 
@@ -124,9 +123,9 @@ const fs = require('fs');
     readStream.on('error', () => {
         console.log('文件读取error');
     })
- */
+
 // 通过文件流来写入数据
-/* 
+
 // 创建一个可写入文件流,将文件写入html/css/1.txt
     let writeStream = fs.createWriteStream('html/css/1.txt');
     const data =" I will write in file";
@@ -141,7 +140,7 @@ const fs = require('fs');
     // 写入错误时触发error事件
     writeStream.on('error',(err)=>{
         console.log(err.stack);
-    }) */
+    })
 
 // 管道流
     // 创建一个文件可读流
