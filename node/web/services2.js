@@ -6,39 +6,39 @@ const url = require('url');
 
 // 创建app
 let G = {}
-let app = function (req, res) {
+let app = function(req, res) {
     let pathname = url.parse(req.url).pathname;
     // G的key统一格式/地址/
-   
+
     if (!pathname.endsWith('/')) {
-        pathname = pathname + '/'
+        pathname = pathname + '/';
     }
-    
+
     // 调用G[pathname]方法；
     if (G[pathname]) {
-        G[pathname](req, res)
+        G[pathname](req, res);
     } else {
-        res.end('no router')
+        res.end('no router');
     }
 
 }
 
 // 定义get方法
-app.get = function (str, callback) {
+app.get = function(str, callback) {
 
     if (!str.startsWith('/')) {
-        str = '/' + str
+        str = '/' + str;
     }
     if (!str.endsWith('/')) {
-        str = str + '/'
+        str = str + '/';
     }
-    G[str] = callback
+    G[str] = callback;
 }
 
-app.get('login',function(req,res){
-    console.log("login");
-    res.end('login')
-    
-})
-// 创建服务并传入app，每次请求的时候都会执行app函数
+app.get('login', function(req, res) {
+        console.log("login");
+        res.end('login');
+
+    })
+    // 创建服务并传入app，每次请求的时候都会执行app函数
 http.createServer(app).listen(3000);
