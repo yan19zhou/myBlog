@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!--  <link rel="stylesheet" href="css/style.css"> -->
+</head>
+
+<body>
+    <h4 class="title">{{list.name}}</h4>
+    <ul>
+        {{each list.items}}
+        <li>{{$idnex}}-- {{$value}}</li>
+        {{/each}}
+    </ul>
+    <hr>
+    {{if list.num >20}}
+    <span>大于20</span>
+    {{else}}
+    <span>小于20</span>
+    {{/if}}
+    </br>
+    </hr>
+    {{include './footer.html'}}
+</body>
+
+</html>
