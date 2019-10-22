@@ -1,0 +1,18 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "express-route.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.7.1",
+    "koa": "^2.10.0",
+    "koa-router": "^7.4.0",
+    "koa-view": "^2.1.3",
+    "koa-views": "^6.2.1"
+  }
+}
