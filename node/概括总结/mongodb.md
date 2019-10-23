@@ -29,15 +29,15 @@
     // 排序
     db.table.find().sort({"age":1}) // 1升序，-1降序
     // or查询
-    db.table.find({$or:[{"name":"zhangsan"},{"name":"wusi"}]})
+    db.table.find({$or:[{"name":"zhangsan"},{"name":"wusi"}]});
     //查询第一条
     db.table.findOne();
     //计数
     db.table.find().count();
     // 修改数据
-    db.table.update({"name":"zhangsan"},{$set:{"age",28}})//查找name是zhangsan的这条数据，改age为28，去掉$set后为整条替换
+    db.table.update({"name":"zhangsan"},{$set:{"age",28}}); // 查找name是zhangsan的这条数据，改age为28，去掉$set后为整条替换
     // 删除数据
-    db.table.remove({"name":"zhangsan"})
+    db.table.remove({"name":"zhangsan"});
 #### 索引
     //添加索引
     db.table.ensureIndex({"name":1})// 给name列添加索引 1表示按升序存储，-1表示按照降序存储
