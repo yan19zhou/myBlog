@@ -80,12 +80,19 @@
 6.继承
 ###### es5主要利用原型来继承
     function son(){
-
+        parent.call(this.name,this.age)
     }
-    function parent(){
-
+    function parent(name,age){
+        // 构造函数
+        this.name = name;
+        this.age = age;
+        this.run=function(){
+            console.log(this.name+"--"+this.age);
+        }
     }
-    son.prototype = new parent()
+    son.prototype = new parent();
+    // 原型链继承的时候，子类实例的时候无法给父类传参，所以结合对象冒充来实现继承
+
 ###### 将子的原型指向父的实例
 
 ###### ES6 使用类和extends来继承，如react组件都是用继承component来构建
@@ -99,7 +106,6 @@
             super(name); // 继承父类的参数
             this.age = age 
         }
-
     }
 7.字符串
 ##### 字符串方法
