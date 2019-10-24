@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+      table td{
+            border: solid 1px solid;
+        }
+    
+    </style>
+</head>
+
+<body>
+    <a href="/add">新增</a>
+</br>
+    <table>
+        <thead>
+            <tr>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>编辑</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{each list}}
+
+            <tr>
+                <td>{{$value.name}}</td>
+                <td>{{$value.sex}}</td>
+                <td><a href="/edit?id={{@$value._id}}">编辑</a> <a href="/delete?id={{@$value._id}}">删除</a></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</body>
+
+</html>

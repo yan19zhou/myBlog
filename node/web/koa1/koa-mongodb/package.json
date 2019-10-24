@@ -10,6 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "koa": "^2.10.0",
+    "koa-art-template": "^1.1.1",
+    "koa-bodyparser": "^4.2.1",
     "mongodb": "^3.3.3"
   }
 }
