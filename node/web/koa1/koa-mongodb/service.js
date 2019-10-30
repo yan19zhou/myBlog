@@ -17,6 +17,7 @@ render(app, {
     extname: '.html',  // 后缀名
     debug: process.env.NODE_ENV !== 'production'  //是否开启调试模式
 });
+
 //显示学员信息
 router.get('/', async (ctx) => {
 
@@ -64,24 +65,24 @@ router.post('/doEdit', async (ctx) => {
     let data = ctx.request.body;
     let id = data.id;
     let result = await DB.update('use', { "_id": DB.getObjectId(id) }, data);
-    if(result.result.ok){
+    if (result.result.ok) {
         ctx.redirect('/')
-    }else{
+    } else {
         return;
     }
 
 })
 
 router.get('/delete', async (ctx) => {
-    // 编辑页面，回显数据
+
     // 获取get请求参数
     let id = ctx.query.id;
 
     let data = await DB.remove('use', { "_id": DB.getObjectId(id) });
 
-    if(data.result.ok){
+    if (data.result.ok) {
         ctx.redirect('/')
-    }else{
+    } else {
         return;
     }
 })

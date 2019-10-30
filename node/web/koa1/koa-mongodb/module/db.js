@@ -44,9 +44,7 @@ class Db{
 
                   if(err){
                       reject(err)
-
                   }else{
-
                       _that.dbClient=client.db(Config.dbName);
                       resolve(_that.dbClient)
                   }
@@ -54,12 +52,8 @@ class Db{
 
           }else{
               resolve(_that.dbClient);
-
           }
-
-
       })
-
     }
 
     find(collectionName,json){
