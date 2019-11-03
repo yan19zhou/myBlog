@@ -2,8 +2,8 @@ var Koa = require('koa'),
     router = require('koa-router')(),
     render = require('koa-art-template'),
     path = require('path'),
-    url = require('url');
-bodyParser = require('koa-bodyparser'),
+    url = require('url'),
+    bodyParser = require('koa-bodyparser'),
     DB = require('./module/db.js');
 
 var app = new Koa();
