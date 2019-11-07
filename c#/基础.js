@@ -73,13 +73,32 @@
 	example：
 		public enum Gender{female,male};
 		Gender gender = Gender.female;
+	ps:enum类型可以跟int类型相互转换，枚举类型和int类型是兼容的。所有的类型都可以通过toString()转换成string类型。
+		example：
+				public enum QQstate{onLine,OffLine,QMe,Leave}
+				int a = (int)QQstate.onLine;
+				Console.writeLine(a); // 0
 
+		string类型转换为枚举类型,通过Enum.parse来转换
+		string a = "0";
+		QQstate s = (QQstate)Enum.Parse(typeof(QQstate),a);
+		
+11.结构：
+		可以一次性声明多个不同类型变量
+		语法：[public] struct 结构名{
+			[public] 字段类型 字段名; // 字段名前面要加_;
+		}
 
-	
+		使用：
+		结构名 变量名;
+		变量名.字段；
 
-
-
-
+12. 数组：
+		定义： int[] arr1 = new int[10];
+			   int[] arr2 = {1,2,3,4,5,6,7}
+					
+13.函数/方法： [public]  static 返回类型 方法名(){}
+				方法要执行必须要在main()函数中调用，调用语法：类名.方法名();
 
 
 
