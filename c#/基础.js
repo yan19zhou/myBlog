@@ -88,11 +88,22 @@
 		语法：[public] struct 结构名{
 			[public] 字段类型 字段名; // 字段名前面要加_;
 		}
-
+		// 声明结构
+			public struct Person
+			{
+				public string _name;
+				public int _age;
+				public Gender _gender;
+			}
 		使用：
 		结构名 变量名;
 		变量名.字段；
-
+		// 给结构赋值
+            Person person;
+            person._name = "lisa";
+            person._age = 25;
+            person._gender = Gender.female;
+			
 12. 数组：
 		定义： int[] arr1 = new int[10];
 			   int[] arr2 = {1,2,3,4,5,6,7}
