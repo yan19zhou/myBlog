@@ -110,7 +110,22 @@
 					
 13.函数/方法： [public]  static 返回类型 方法名(){}
 				方法要执行必须要在main()函数中调用，调用语法：类名.方法名();
-
+				
+14.高级参数
+	out参数：表示方法多余返回的值
+	example：public static void Test(int [] arr,out int max,out int min,out int sum ){
+					// 方法中给out参数的值赋值
+				}
+	ref参数：能将一个变量带入参数内进行改变，然后将改变后的值带出
+	example： int salary = 5000;
+				Test(ref salary);
+				public static void Test(ref int a){
+					
+				}
+			ps:要求在方法外必须为其赋值，方法内可以不赋值；
+	
+	params：可变参数，将实参列表中跟数组参数类型一样的参数都当成数组的元素去处理；
+			params可变参数数组必须是形参列表的最后一个
 
 
 
