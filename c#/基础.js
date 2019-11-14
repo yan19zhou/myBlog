@@ -37,9 +37,9 @@
         //Console.ReadKey();
 
 6. 类型转换，
-		// 类型兼容 double int
-        // 从小转大 --隐式转换
-        // 从大转小 --显式转换
+		 类型兼容 double int
+         从小转大 --隐式转换
+         从大转小 --显式转换
 
             //int n1 = 30;
             //int n2 = 7;
@@ -48,12 +48,16 @@
             //Console.WriteLine("{0:0.00}",d);// 占位符意思是保留两位小数点
             //Console.ReadKey();
            
-        // 如果类型兼容可以用隐式或者显式类型转换，如果不兼容可以用convert类型工厂来进行转换，如string转int或double
+          如果类型兼容可以用隐式或者显式类型转换，如果不兼容可以用convert类型工厂来进行转换，如string转int或double
 
             //string s = "122";
             //double d = Convert.ToDouble(s);
             //Console.WriteLine(d);
             //Console.ReadKey();
+		  double类型保留两位小数：
+			double d = "3.1415926";
+			double.Parse(d.toString("0.00"));
+			
 
 7.运算符：一元运算符：++ -- 前++ -- 先执行++ -- 再参与表达式运算，后++ -- 先执行表达式运算，再进行自己的++ --运算符
 				ps：一元运算符的优先级高于+- * / 等二元运算符
