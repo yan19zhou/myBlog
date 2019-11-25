@@ -1,12 +1,12 @@
 let url = require('url');
 
 // 封装路由 暴露模块
-let Server = function() {
+let Server = function () {
     // 全局变量
     let G = this;
     this._get = {};
     this._post = {};
-    let app = function(req, res) {
+    let app = function (req, res) {
         // 处理路由
         changeRes(res); // 改变响应头
         let pathname = url.parse(req.url).pathname;
@@ -30,7 +30,6 @@ let Server = function() {
                 });
                 res.on('end', (err) => {
                     if (err) {
-
                         return false;
                     } else {
                         res.body = str;
@@ -46,7 +45,7 @@ let Server = function() {
         }
 
     }
-    app.get = function(str, callback) {
+    app.get = function (str, callback) {
         if (!str.endsWith('/')) {
             str = str + '/';
         }
@@ -55,7 +54,7 @@ let Server = function() {
         }
         G._get[str] = callback;
     }
-    app.post = function(str, callback) {
+    app.post = function (str, callback) {
         if (!str.endsWith('/')) {
             str = str + '/';
         }
@@ -69,7 +68,7 @@ let Server = function() {
 }
 
 function changeRes(res) {
-    res.send = function(data) {
+    res.send = function (data) {
         res.writeHead(200, {
             "Content-Type": "text/html;charset='utf-8'"
         });
