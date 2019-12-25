@@ -210,6 +210,10 @@
 		程序结束后GC扫描内存，如果内存没有被指向则清除
 	2.字符串方法：
 	  ToCharArray();
+	  Contains();// 判断某个字符串中是否包含自定字符；
+	  TrimStart();// 去掉字符串前面空格；
+	  TrimEnd();// 去掉字符串后面空格；
+	  string.IsNullOrEmpty(); // 判断一个字符串是否为空或者为null
 
 
 
