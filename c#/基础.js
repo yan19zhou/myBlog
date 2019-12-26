@@ -174,7 +174,7 @@
 	4.构造函数无返回值
 	
 22：this
-
+		// 当前类的对象
 	    public Person(string name ,int age,char gender,int score)
         {
             this.name = name;
@@ -183,7 +183,7 @@
             this.score = score;
         }
 
-        public Person(string name, int age, char gender) : this( name, age, gender, 0)
+        public Person(string name, int age, char gender) : this( name, age, gender, 0)  // 调用当前类的构造函数
         {
 
         }
@@ -215,10 +215,56 @@
 	  TrimEnd();// 去掉字符串后面空格；
 	  string.IsNullOrEmpty(); // 判断一个字符串是否为空或者为null
 
+26.继承
+	父类--子类 || 基类--派生类
+	子类能继承父类的属性和方法，不能继承父类的私有字段。能看到，但是不能用。
+	子类没有继承父类的构造函数，但是创建子类对象的时候默认调用父类的无参构造函数，创建父类对象，让子类可以调用父类的成员
+	所有如果父类重写了一个有参数的构造函数，那么子类就掉不到父类成员了，就会报错，解决方法：
+	1.父类再写一个无参构造函数
+	2.子类构造函数调用父类的：base();
 
+	继承的特效：
+	1.但根性：子类只能继承一个父类
+	2.传递性：祖父-->父-->子
 
+	new关键字：
+	1.创建对象
+	2.隐藏从父类继承过来的同名成员，这样子类就调用不到父类的同名成员了
 
+27.里氏转换：
+	1.子类可以赋值给父类(如果有一个方法需要传一个父类对象，我们可以传第一个子类对象)
+	2.如果一个父类中装的是子类对象，则可以把这个父类强转为子类对象
 
+28.集合
+			///  数组集合
+            ArrayList list = new ArrayList();
+            // Remove RemoveAt  RemoveRange Insert InsertRange Clear Reverse Sort
+
+            // 键值对集合
+            //ContainsKey是否包含键x
+
+            //Hashtable hashtable = new Hashtable();
+            //hashtable.Add(1, "111");
+            //hashtable.Add(2, "222");
+            //foreach(var item in hashtable.Keys)
+            //{
+            //    Console.WriteLine("{0}------------{1}", item, hashtable[item]);
+            //}
+            // path 操作路径的字符串
+            // Path.GetFullPath("");
+
+            // File类 操作文件
+            // Create Delete Copy Move
+            byte[] vs = File.ReadAllBytes(@"C:\Users\Administrator\Desktop\tx.txt");
+            // 将字节数组中的每一个元素都按照我们制定的编码格式解码成字符串
+            string str = Encoding.Default.GetString(vs);
+            Console.WriteLine(str);
+            string st = "文化苦旅    余秋雨";
+            byte[] vd = Encoding.Default.GetBytes(st);
+            File.WriteAllBytes(@"C:\Users\Administrator\Desktop\tx.txt", vd);
+			Console.ReadKey();
+
+29.
 
 
 
