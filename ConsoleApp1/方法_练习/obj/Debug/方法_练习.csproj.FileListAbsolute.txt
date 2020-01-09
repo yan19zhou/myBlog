@@ -1,0 +1,6 @@
+C:\Users\Administrator\source\repos\ConsoleApp1\方法_练习\bin\Debug\方法_练习.exe.config
+C:\Users\Administrator\source\repos\ConsoleApp1\方法_练习\bin\Debug\方法_练习.exe
+C:\Users\Administrator\source\repos\ConsoleApp1\方法_练习\bin\Debug\方法_练习.pdb
+C:\Users\Administrator\source\repos\ConsoleApp1\方法_练习\obj\Debug\方法_练习.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\ConsoleApp1\方法_练习\obj\Debug\方法_练习.exe
+C:\Users\Administrator\source\repos\ConsoleApp1\方法_练习\obj\Debug\方法_练习.pdb

@@ -324,4 +324,7 @@ f11逐语句
         //ADD
         strList.Add("bilibili");
         //集合和数组相互转换
-        string[] strArr = new string[] { "bilibili" }; List < string > list = strArr.toList(); string[] arr = strList.toArray(); 29. 装箱和拆箱 1. 装箱： 讲值类型转换成引用类型 2. 拆箱： 将引用类型转换成值类型
+        string[] strArr = new string[] { "bilibili" };
+         List < string > list = strArr.toList();
+          string[] arr = strList.toArray(); 
+        29. 装箱和拆箱 1. 装箱： 讲值类型转换成引用类型 2. 拆箱： 将引用类型转换成值类型

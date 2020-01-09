@@ -1,0 +1,6 @@
+C:\Users\Administrator\source\repos\ConsoleApp1\方法\bin\Debug\方法.exe.config
+C:\Users\Administrator\source\repos\ConsoleApp1\方法\bin\Debug\方法.exe
+C:\Users\Administrator\source\repos\ConsoleApp1\方法\bin\Debug\方法.pdb
+C:\Users\Administrator\source\repos\ConsoleApp1\方法\obj\Debug\方法.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\ConsoleApp1\方法\obj\Debug\方法.exe
+C:\Users\Administrator\source\repos\ConsoleApp1\方法\obj\Debug\方法.pdb

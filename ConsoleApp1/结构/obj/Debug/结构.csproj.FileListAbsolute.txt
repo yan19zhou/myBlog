@@ -1,0 +1,6 @@
+C:\Users\Administrator\source\repos\ConsoleApp1\结构\bin\Debug\结构.exe.config
+C:\Users\Administrator\source\repos\ConsoleApp1\结构\bin\Debug\结构.exe
+C:\Users\Administrator\source\repos\ConsoleApp1\结构\bin\Debug\结构.pdb
+C:\Users\Administrator\source\repos\ConsoleApp1\结构\obj\Debug\结构.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\ConsoleApp1\结构\obj\Debug\结构.exe
+C:\Users\Administrator\source\repos\ConsoleApp1\结构\obj\Debug\结构.pdb

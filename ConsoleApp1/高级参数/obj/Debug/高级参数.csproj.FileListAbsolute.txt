@@ -1,0 +1,6 @@
+C:\Users\Administrator\source\repos\ConsoleApp1\高级参数\bin\Debug\高级参数.exe.config
+C:\Users\Administrator\source\repos\ConsoleApp1\高级参数\bin\Debug\高级参数.exe
+C:\Users\Administrator\source\repos\ConsoleApp1\高级参数\bin\Debug\高级参数.pdb
+C:\Users\Administrator\source\repos\ConsoleApp1\高级参数\obj\Debug\高级参数.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\ConsoleApp1\高级参数\obj\Debug\高级参数.exe
+C:\Users\Administrator\source\repos\ConsoleApp1\高级参数\obj\Debug\高级参数.pdb

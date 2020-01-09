@@ -1,0 +1,6 @@
+C:\Users\Administrator\source\repos\ConsoleApp1\game\bin\Debug\game.exe.config
+C:\Users\Administrator\source\repos\ConsoleApp1\game\bin\Debug\game.exe
+C:\Users\Administrator\source\repos\ConsoleApp1\game\bin\Debug\game.pdb
+C:\Users\Administrator\source\repos\ConsoleApp1\game\obj\Debug\game.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\ConsoleApp1\game\obj\Debug\game.exe
+C:\Users\Administrator\source\repos\ConsoleApp1\game\obj\Debug\game.pdb

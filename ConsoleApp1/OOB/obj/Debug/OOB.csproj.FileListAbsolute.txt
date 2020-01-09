@@ -1,0 +1,7 @@
+C:\Users\Administrator\source\repos\ConsoleApp1\OOB\bin\Debug\OOB.exe.config
+C:\Users\Administrator\source\repos\ConsoleApp1\OOB\bin\Debug\OOB.exe
+C:\Users\Administrator\source\repos\ConsoleApp1\OOB\bin\Debug\OOB.pdb
+C:\Users\Administrator\source\repos\ConsoleApp1\OOB\obj\Debug\OOB.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\ConsoleApp1\OOB\obj\Debug\OOB.exe
+C:\Users\Administrator\source\repos\ConsoleApp1\OOB\obj\Debug\OOB.pdb
+C:\Users\Administrator\source\repos\ConsoleApp1\OOB\obj\Debug\OOB.csprojAssemblyReference.cache

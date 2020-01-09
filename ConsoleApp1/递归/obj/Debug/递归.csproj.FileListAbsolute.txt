@@ -1,0 +1,6 @@
+C:\Users\Administrator\source\repos\ConsoleApp1\递归\bin\Debug\递归.exe.config
+C:\Users\Administrator\source\repos\ConsoleApp1\递归\bin\Debug\递归.exe
+C:\Users\Administrator\source\repos\ConsoleApp1\递归\bin\Debug\递归.pdb
+C:\Users\Administrator\source\repos\ConsoleApp1\递归\obj\Debug\递归.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\ConsoleApp1\递归\obj\Debug\递归.exe
+C:\Users\Administrator\source\repos\ConsoleApp1\递归\obj\Debug\递归.pdb
