@@ -1,0 +1,131 @@
+##### 旋转动画
+
+> 多元素动态旋转动画
+>
+> ![image-20201029105906341](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201029105906341.png)
+
+
+```scss
+.left_box .button > li {
+    position: absolute;
+    width: 156px;
+    height: 156px;
+    animation: along 6s linear 0s infinite;
+    -moz-animation: along 6s linear 0s infinite;
+    -webkit-animation: along 6s linear 0s infinite;
+    -o-animation: along 6s linear 0s infinite
+}
+
+.left_box .button > li > a {
+    display: block;
+    width: 115px;
+    height: 115px;
+    margin: 20px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    line-height: 24px;
+    padding-top: 32px;
+    letter-spacing: 1px;
+    font-weight: bold;
+    text-shadow: 0 0 10px #007eff, 0 0 10px #007eff;
+    animation: inverse 6s linear 0s infinite;
+    -moz-animation: inverse 6s linear 0s infinite;
+    -webkit-animation: inverse 6s linear 0s infinite;
+    -o-animation: inverse 6s linear 0s infinite;
+}
+
+.left_box .button > li:hover,
+.left_box .button > li:hover > a {
+    -webkit-animation-play-state: paused;
+}
+
+    .left_box .button > li:hover > a,
+    .left_box .button > li.active > a {
+        text-shadow: 0 0 10px #ffcc00, 0 0 10px #ffcc00;
+    }
+    @-webkit-keyframes along {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+to {
+    -webkit-transform: rotate(360deg);
+}
+}
+
+@-webkit-keyframes inverse {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+    -webkit-transform: rotate(-360deg);
+}
+}
+```
+
+##### 元素块hover翻转
+
+> 一个立体翻转的动画
+>
+> ![image-20201029105939284](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201029105939284.png)
+
+```html
+<ul>
+	<li>
+		<div class="box">
+		<div class="front">公众号:</div>
+		<div class="bottom">前端自学驿站</div>
+		</div>
+	</li>
+</ul>
+
+```
+
+
+```css
+ul li {
+	float: left;
+	margin: 0 5px;
+	width: 120px;
+	height: 35px;
+	list-style: none;
+	/* 一会我们需要给box 旋转 也需要透视 干脆给li加 里面的子盒子都有透视效果 */
+	perspective: 500px;
+}
+
+.box {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	transform-style: preserve-3d;
+	transition: all .4s;
+}
+
+.box:hover {
+	transform: rotateX(90deg);
+}
+
+.front,
+.bottom {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.front {
+	background-color: pink;
+	z-index: 1;
+	transform: translateZ(17.5px);
+}
+
+.bottom {
+	background-color: purple;
+	/* 这个x轴一定是负值 */
+	/* 我们如果有移动 或者其他样式，必须先写我们的移动 */
+	transform: translateY(17.5px) rotateX(-90deg);
+}
+
+```

@@ -79,7 +79,37 @@ const routes = [
 
 
 
+###### 主应用路由配置
+
+````javascript
+// 添加隐藏路由匹配微应用中的跳转，使得主应用对于/sub-vue，/sub-vue/about匹配到的是同一个路由组件
+const routes = [
+  {
+    path: "/sub-vue",
+    name: "Home",
+    component: Home,
+    meta: {
+      isMicrApp: true,
+    },
+  },
+  {
+    path: `/sub-vue/:micrAppRoute`, //匹配微应用内的路由跳转
+    hidden: true,
+    component: Home,
+    name: "Home",
+    meta: {
+      title: "开发环境",
+      isMicrApp: true,
+    },
+  },
+];
+````
+
+
+
 ###### 子应用
+
+> 子应用渲染
 
 ````javascript
 //main.js
@@ -143,7 +173,7 @@ export async function unmount() {
 
 
 
-
+> 子应用vue.config.js
 
 ````javascript
 // vue.config.js
@@ -196,13 +226,112 @@ module.exports = {
 };
 ````
 
+> 子应用路由
+
+````javascript
+const router = new VueRouter({
+  mode: "history",
+  base: window.__POWERED_BY_QIANKUN__ ? "/sub-vue" : "/", //匹配微应用路由
+  routes,
+});
+````
 
 
-##### 子应用手动加载
+
+##### 应用通信
+
+>主-->子 (静态数据)
+
+````javascript
+// 主应用通过props下发数据
+let myMsg={
+	data:{},
+	fn:[fn1(),]
+}
+ props: {
+      myMsg
+    },
+ // 子应用通过钩子获取主应用的props挂载到实例
+  export async function bootstrap(props = {}) {
+    Array.isArray(props.fns) && props.fns.map(i => {
+        Vue.prototype[i.name] = i[i.name]
+    });
+  }
+  
+````
 
 
 
+> 主 ，子应用自己动态通信
 
+````javascript
+/*
+1.先在主应用下载并引入rxjs；并创建我们的'呼机'
+**/
+import { Subject } from "rxjs"; // 按需引入减少依赖包大小
+const pager = new Subject();
+export default pager;
+/*
+2.然后在主应用main.js引入并注册呼机，以及将呼机下发给子应用
+**/
+
+  import pager from "./util/pager"           // 导入应用间通信介质：呼机
+
+  pager.subscribe(v => {                // 在主应用注册呼机监听器，这里可以监听到其他应用的广播
+    console.log(`监听到子应用${v.from}发来消息：`, v)
+    store.dispatch('app/setToken', v.token)  // 这里处理主应用监听到改变后的逻辑
+  })
+
+  let msg = {                      // 结合下章主应用下发资源给子应用，将pager作为一个模块传入子应用
+    data: store.getters,                     // 从主应用仓库读出的数据
+    components: LibraryUi,                   // 从主应用读出的组件库
+    utils: LibraryJs,                        // 从主应用读出的工具类库
+    emitFnc: childEmit,                      // 从主应用下发emit函数来收集子应用反馈
+    pager                                    // 从主应用下发应用间通信呼机
+  };
+  registerMicroApps(                         // 注册子应用
+    [
+      {
+        name: "subapp-ui",
+        entry: "//localhost:6651",
+        render,
+        activeRule: genActiveRule("/ui"),
+        props: msg                           // 将上面数据传递给子应用
+      }
+    ])
+
+/*
+3.在子应用中注册呼机
+**/
+  export async function bootstrap({ components, utils, emitFnc, pager }) {
+    Vue.use(components);                     // 注册主应用下发的组件
+    
+    Vue.prototype.$mainUtils = utils;        // 把工具函数挂载在vue $mainUtils对象
+    
+    Object.keys(emitFnc).forEach(i => {      // 把mainEmit函数一一挂载
+      Vue.prototype[i] = emitFnc[i]
+    });
+    
+    pager.subscribe(v => {               // 在子应用注册呼机监听器，这里可以监听到其他应用的广播
+      console.log(`监听到子应用${v.from}发来消息：`, v)
+      // store.dispatch('app/setToken', v.token)   // 在子应用中监听到其他应用广播的消息后处理逻辑
+    })
+    Vue.prototype.$pager = pager;             // 将呼机挂载在vue实例
+  }
+
+/*
+4.在各应用中使用呼机动态传递信息
+**/
+  methods: {                        // 在某个应用里调用.next方法更新数据，并传播给其他应用
+    callParentChange() {
+      this.myMsg = "但若不见你，阳光也无趣";
+      this.$pager.next({
+        from: "subapp-ui",
+        token: "但若不见你，阳光也无趣"
+      });
+    }
+  }
+````
 
 
 
