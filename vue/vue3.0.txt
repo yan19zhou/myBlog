@@ -1,0 +1,183 @@
+#### vue3.0更新
+
+##### 动态异步组件
+
+> 不带选项的异步组件
+
+````javascript
+const app = Vue.createApp({})
+
+//动态引入组件
+const asyncCom = defineAsyncComponent(()=>import('./component.vue'))
+
+// 函数内定义组件
+const asyncCom = Vue.defineAsyncComponent(
+  () =>
+    new Promise((resolve, reject) => {
+      resolve({
+        template: '<div>I am async!</div>'
+      })
+    })
+)
+//组件挂载
+app.component('async-example', asyncCom)
+````
+
+
+
+> 带选项的异步组件
+
+```javascript
+const asyncCom = defineAsyncComponent({
+    loader:()=>import('./component.vue'),
+    ladey:200,
+    timeout: 3000,
+    errorComponent: ErrorComponent,
+    loadingComponent: LoadingComponent
+})
+```
+
+
+
+##### attribute强制属性
+
+![image-20201102151242704](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20201102151242704.png)
+
+
+
+##### 自定义指令
+
+> API更改
+>
+> - bind → **beforeMount**
+> - inserted → **mounted**
+> - **beforeUpdate**：新的！这是在元素本身更新之前调用的，很像组件生命周期钩子。
+> - update → 移除！有太多的相似之处要更新，所以这是多余的，请改用 `updated`。
+> - componentUpdated → **updated**
+> - **beforeUnmount**：新的！与组件生命周期钩子类似，它将在卸载元素之前调用。
+> - unbind -> **unmounted**
+
+
+
+````html
+<p v-highlight="yellow">高亮显示此文本亮黄色</p>
+````
+
+```javascript
+const app = Vue.createApp({})
+
+app.directive('highlight', {
+  beforeMount(el, binding, vnode) {
+      //In Vue 3, the instance is now part of the binding
+    el.style.background = binding.value 
+  }
+})
+```
+
+
+
+##### Data 选项
+
+> 1.只接受返回 `object` 的 `function`
+>
+> 2.Mixin 与data只进行浅层次的合并
+
+
+
+##### v-model
+
+>.sync` 的部分并将其替换为 `v-model
+
+```html
+<ChildComponent :title.sync="pageTitle" />
+
+<!-- 替换为 -->
+
+<ChildComponent v-model:title="pageTitle" />
+```
+
+
+
+> 对于所有不带参数的 `v-model`，请确保分别将 prop 和 event 命名更改为 `modelValue` 和 `update:modelValue`
+
+```html
+<ChildComponent v-model="pageTitle" />
+```
+
+```javascript
+// ChildComponent.vue
+
+export default {
+  props: {
+    modelValue: String // 以前是`value：String`
+  },
+  methods: {
+    changePageTitle(title) {
+      this.$emit('update:modelValue', title) // 以前是 `this.$emit('input', title)`
+    }
+  }
+}
+```
+
+
+
+##### v-if 和v-for的优先级
+
+> 在2.0中v-for的优先级更高，3.0中v-if的优先级调整到更高，两者一般不作用于同一元素。
+
+
+
+##### v-bind 合并行为
+
+> v-bind 的绑定顺序会影响渲染结果
+
+```html
+<!-- template -->
+<div id="red" v-bind="{ id: 'blue' }"></div>
+<!-- result -->
+<div id="blue"></div>
+
+<!-- template -->
+<div v-bind="{ id: 'blue' }" id="red"></div>
+<!-- result -->
+<div id="red"></div>
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
