@@ -1,0 +1,33 @@
+```html
+<style>
+        .dotting {
+            display: inline-block;
+            min-width: 2px;
+            min-height: 2px;
+            margin-right: 8px;
+            box-shadow: 2px 0, 5px 0, 10px 0;
+            /* animation: dot 4s infinite step-start both; */
+        }
+        
+        @keyframes dot {
+            25% {
+                box-shadow: none;
+            }
+            /* 0个点 */
+            50% {
+                box-shadow: 2px 0;
+            }
+            /* 1个点 */
+            75% {
+                box-shadow: 2px 0, 6px 0;
+            }
+            /* 2个点 */
+        }
+    </style>
+
+
+<body>
+    <button>订单提交中<span class="dotting"></span></button>
+</body>
+```
+
