@@ -359,15 +359,194 @@ export default {
 
 
 
+##### watch
+
+> 同时监听多个值
+
+````javascript
+<script lang="ts">
+import { computed, defineComponent, reactive, toRefs, watch } from 'vue';
+interface Person {
+  name: string,
+  age: number
+}
+export default defineComponent({
+  setup(props, context) {
+    const state = reactive<Person>({ name: 'vue', age: 10 })
+
+    watch(
+      [() => state.age, () => state.name],
+      ([newName, newAge], [oldName, oldAge]) => {
+        console.log(newName);
+        console.log(newAge);
+
+        console.log(oldName);
+        console.log(oldAge);
+      }
+    )
+    // 修改age 时会触发watch 的回调, 打印变更前后的值, 此时需要注意, 更改其中一个值, 都会执行watch的回调
+    state.age = 100
+    state.name = 'vue3'
+    return {
+      ...toRefs(state)
+    }
+  }
+});
+</script>
+
+
+````
 
 
 
+##### vue 的全局配置
+
+> 可以在挂载应用程序之前修改下面列出的属性:
+
+```javascript
+const app = Vue.createApp({})
+
+app.config = {...}
+```
+
+> 可以代替Vue 2.xVue.prototype扩展
+
+```javascript
+const app = Vue.createApp({})
+
+app.config.globalProperties.$http = 'xxxxxxxxs'
+
+```
+
+> 可以在组件用通过 getCurrentInstance() 来获取全局globalProperties 中配置的信息,getCurrentInstance 方法获取当前组件的实例，然后通过 ctx 属性获得当前上下文，这样我们就能在setup中使用router和vuex,  通过这个属性我们就可以操作变量、全局属性、组件属性等等
+
+```javascript
+setup( ) {
+  const { ctx } = getCurrentInstance();
+  ctx.$http   
+}
+
+```
+
+##### Suspense
+
+```html
+<template>
+  <Suspense>
+    <template #default>
+      <my-component />
+    </template>
+    <template #fallback>
+      Loading ...
+    </template>
+  </Suspense>
+</template>
+
+<script lang='ts'>
+ import { defineComponent, defineAsyncComponent } from "vue";
+ const MyComponent = defineAsyncComponent(() => import('./Component'));
+
+export default defineComponent({
+   components: {
+     MyComponent
+   },
+   setup() {
+     return {}
+   }
+})
+ 
+ 
+</script>
+
+```
 
 
 
+##### 完整组件结构
 
+```html
+<template>
+  <div class="mine" ref="elmRefs">
+    <span>{{name}}</span>
+    <br>
+    <span>{{count}}</span>
+    <div>
+      <button @click="handleClick">测试按钮</button>
+    </div>
 
+    <ul>
+      <li v-for="item in list" :key="item.id">{{item.name}}</li>
+    </ul>
+  </div>
+</template>
 
+<script lang="ts">
+import { computed, defineComponent, getCurrentInstance, onMounted, PropType, reactive, ref, toRefs } from 'vue';
+
+interface IState {
+  count: 0,
+  name: string,
+  list: Array<object>
+}
+
+export default defineComponent({
+  name: 'demo',
+  // 父组件传子组件参数
+  props: {
+    name: {
+      type: String as PropType<null | ''>,
+      default: 'vue3.x'
+    },
+    list: {
+      type: Array as PropType<object[]>,
+      default: () => []
+    }
+  },
+  components: {
+    /// TODO 组件注册
+  },
+  emits: ["emits-name"], // 为了提示作用
+  setup (props, context) {
+    console.log(props.name)
+    console.log(props.list)
+    
+    
+    const state = reactive<IState>({
+      name: 'vue 3.0 组件',
+      count: 0,
+      list: [
+        {
+          name: 'vue',
+          id: 1
+        },
+        {
+          name: 'vuex',
+          id: 2
+        }
+      ]
+    })
+
+    const a = computed(() => state.name)
+
+    onMounted(() => {
+
+    })
+
+    function handleClick () {
+      state.count ++
+      // 调用父组件的方法
+      context.emit('emits-name', state.count)
+    }
+  
+    return {
+      ...toRefs(state),
+      handleClick
+    }
+  }
+});
+</script>
+
+```
 
 
 
