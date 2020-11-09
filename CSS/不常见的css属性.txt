@@ -1,0 +1,88 @@
+##### filter
+
+> 调整元素的明亮，对比度，饱和度，灰度
+
+#####  column-count ，column-gap
+
+> 布局元素，元素分割成column-count列，之间的间距column-gap
+
+##### clip-path
+
+> 切割成基础图形
+>
+> **inset()** 正方形，**circle()** 圆，**ellipse()** 椭圆， **polygon()** 多边形
+
+```css
+/*动画多边形*/
+div {
+  width: 300px;
+  height: 300px;
+  background: repeating-linear-gradient(red, orange 50px);
+  clip-path: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+  animation: 4s poly infinite alternate ease-in-out;
+  margin: 10px auto;
+}
+
+@keyframes poly {
+  from {
+    clip-path: polygon(50% 0%, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0% 50%, 40% 40%);
+  }
+
+  to {
+    clip-path: polygon(50% 30%, 100% 0%, 70% 50%, 100% 100%, 50% 70%, 0% 100%, 30% 50%, 0% 0%);
+  }
+}
+```
+
+##### **`object-position`**
+
+**`object-position`** 规定了[可替换元素](https://developer.mozilla.org/zh-CN/docs/Web/CSS/Replaced_element)的内容，在这里我们称其为对象（即 **`object-position`** 中的 **`object`）**，在其内容框中的位置
+
+```css
+object-position: 50% 50%;
+object-position: right top;
+object-position: 250px 125px;
+```
+
+```css
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style> 
+#myImg {
+  width: 200px;
+  height: 400px;
+  object-fit: cover;
+  object-position: 0% 0%;
+  animation: mymove 5s infinite;
+}  
+
+@keyframes mymove {
+  0% {
+    object-position: 0% 0%;
+  }
+  25% {
+    object-position: 20% 0%;
+  }
+  100% {
+    object-position: 100% 100%;
+  }
+}
+</style>
+</head>
+<body>
+
+<h1>object-position 的动画</h1>
+
+<p>逐渐更改图像在其内容框中的位置:<p>
+
+<img src="paris.jpg" alt="Paris" id="myImg" width="400" height="300">
+
+<p>注意: Internet Explorer/Edge 15 或更早版本的浏览器不支持 object-position 和object-fit 属性。</p>
+
+</body>
+</html>
+```
+
