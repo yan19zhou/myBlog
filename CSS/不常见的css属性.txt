@@ -86,3 +86,4 @@ object-position: 250px 125px;
 </html>
 ```
 
+> `position: fixed`和`transform: xxx`一起使用时会有图层上的冲突,如果父元素有`transform`属性，那么子元素position:fixed的参照元素会变为父元素

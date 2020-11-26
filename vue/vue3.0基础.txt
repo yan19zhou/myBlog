@@ -295,6 +295,31 @@ export default {
 
 **在 `setup()` 内部，`this` 不会是该活跃实例的引用**，因为 `setup()` 是在解析其它组件选项之前被调用的，所以 `setup()` 内部的 `this` 的行为与其它选项中的 `this` 完全不同。这在和其它选项式 API 一起使用 `setup()` 时可能会导致混淆。
 
+> setup中操作异步数据
+
+```
+export default {
+  setup() {
+    let code = ref(null);
+    login(code);
+    return { code };
+  },
+};
+
+function login(code) {
+  Taro.login({
+    success: function (res) {
+      if (res.code) {
+        //发起网络请求
+        code.value = res.code;
+      } else {
+        console.log("登录失败！" + res.errMsg);
+      }
+    },
+  });
+}
+```
+
 
 
 ##### 模板引用
