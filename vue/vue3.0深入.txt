@@ -1,0 +1,200 @@
+##### 1.diff算法优化
+
+> vue2中的虚拟dom是进行全量的对比
+> vue3新增了静态标记（PatchFlag）：在与上次虚拟结点进行对比的时候，值对比带有patch flag的节点，并且可以通过flag 的信息得知当前节点要对比的具体内容化
+
+##### 2.静态提升
+
+> Vue2中无论元素是否参与更新，每次都会重新创建
+> Vue3中对不参与更新的元素，只会被创建一次，之后会在每次渲染时候被不停的复用
+
+##### 3.事件缓存
+
+> 默认情况下onClick会被视为动态绑定，所以每次都会去追踪它的变化但是因为是同一个函数，所以没有追踪变化，直接缓存起来复用即可。
+
+##### 4.递归监听和非递归监听
+
+> 递归监听：`` ref`` `reactive`  ref一般用来监听基础数据。reactive一般用来监听复杂数据，只能传入object和arr。每一个数据都会递归生成对应的proxy对象。所以性能消耗比较大。一般情况下使用递归监听就可以了，数据量特别大的时候才考虑非递归监听
+
+```javascript
+// 监听时ref类型对象会转换成reactive对象
+ref(10)==>reactive({value:10})
+```
+
+
+
+> 非递归监听：`shallowRef` `shallowReactive` 。shallowRef监听.value值的改变，shallowReactive监听对象第一层的改变。如果要监听对应数据改变而对应ui变化可以使用triggerRef()。
+>
+> 
+
+```javascript
+// 监听时shallowRef类型对象会转换成shallowReactive对象
+shallowRef(10)==>shallowReactive({value:10})
+
+setup(){
+ let state = triggerRef({
+     a:'1',
+     af:{
+         b:'2',
+         f:{
+           c:3
+           }
+        }
+    })
+  }
+function change(){
+	state.value.af.f.c='cccc';
+	// 这种情况下页面可以响应数据更改
+}
+```
+
+##### 5.toRaw
+
+> toRaw获取reactive类型数据的原始数据；
+>
+> reactive类型数据每次更改都会被追踪，都会更新UI界面，会造成性能的损耗。如果需要数据更改却不更新ui的话可以通过操作其原始数据。
+
+```javascript
+
+let obj={a:'aaa'};
+let state=reactive(obj);
+let state1 = ref(obj);
+let source = toRaw(state);
+
+//toRaw获取ref类型数据的值要传入其.value值，因为本质是包装成了reactive({value:obj})
+let source1 = toRaw(state1.value) 
+
+log(obj === source) // true,更改obj或者source都不会造成ui更新，只有更改state数据时ui才会更新
+```
+
+
+
+##### setup
+
+> 方法在beforeCreate钩子之前执行。所以setup中无法获取this，data， methods。
+>
+> 可以在外部写好方法然后在setup中引用，有助于模块化
+
+```
+import remove from './remove'
+import addStu from './add'
+export default {
+  setup() {
+    //列表
+    let { state, del } = remove();
+    // 新增
+    let { stu, add } = addStu(state);
+    return {
+      state,
+      stu,
+      del,
+      add
+    };
+  }
+```
+
+
+
+##### markRaw
+
+> 数据永远不被追踪
+
+##### toRef
+
+> 把原始值变成响应式
+
+```javascript
+let obj={name:'aaa'}
+let state = ref(obj.name)
+let state1 = toRef(obj,'name')
+
+function change(){
+	state.value = 'zs';// state会改变，obj不会更改，ui更新
+    state1.value='zs';//数据和原始数据都会改变，但是ui不会更新
+}
+// ref==>复制，修改响应数据不会影响之前的数据。数据发生改变，界面就会自动更新；
+// toRef==> 引用，修改响应数据会影响之前的数据。数据发生改变，界面不会自动更新；
+
+// toRef应用场景：想让响应式数据和原始数据关联起来，并且数据更改的时候不更新ui的时候使用。
+```
+
+##### toRefs
+
+> toRef只能接收两个参数改变对象中的某一个属性，而toRefs可以把真个对象变成响应式
+
+```javascript
+let obj={name:"zhangsan",age:23}
+let state = toRefs(obj)
+function setObj(){
+    state.name.value="zhenshuang"
+    state.age.value = 33
+    //obj,state数据都会更新
+}
+```
+
+##### customRef
+
+> 自定义ref，使用场景：异步请求数据的时候
+
+
+
+```javascript
+function myRef(value){
+    return customRef((track,trigger)=>{
+        fetch(value).then(res=>{
+            return res.json();
+        }).then(data=>{
+            value = data;
+            trigger();
+        })
+        return {
+            get(){
+                track();
+                return value;
+            },
+            set(newValue){
+                value = newValue;
+                trigger();
+            }
+        }
+    })
+}
+
+setup(){
+ let list = myRef("./public/data.json");//直接指定请求数据地址
+}
+```
+
+##### readonly
+
+> 只读数据，而且是递归只读
+
+##### shallowReadonly
+
+> 浅只读数据，深层数据可以更改
+
+##### Proxy
+
+```javascript
+let obj = {name:"zhangsan",age:12}
+let state = new Proxy(obj,{
+    get(obj,key){
+        console.log(obj,key)
+        return obj[key]
+    },
+    set(obj,key,value){
+        console.log(obj,key,value)
+        return true;//必须返回一个true告诉程序此次set已经成功，否则后续操作不会进行
+    }
+})
+state.name = "wusi"// 改变属性值打印结果
+```
+
+
+
+
+
+
+
+
+

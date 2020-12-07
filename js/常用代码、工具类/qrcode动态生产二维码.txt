@@ -1,0 +1,72 @@
+动态生成二维码插件 jquery.qrcode.js
+
+
+jquery.qrcode.js是依赖jquery的,所以要先引入jquery再引入jquery.qrcode.js
+
+<script type='text/javascript' src='js/jquery.min.js'></script>
+<script type="text/javascript" src="js/jquery.qrcode.min.js"></script>
+
+ 
+
+在页面上添加一个div标签，用于创建渲染区域
+
+<div id="qrcode"></div>
+
+ 
+
+通过下面代码就可以生成一个默认256×256大小的二维码
+
+<script type="text/javascript">
+    jQuery('#qrcode').qrcode("http://www.cnblogs.com/HtmlCss3/");
+</script>
+
+怎么样？简单吧，从此让二维码信手拈来~
+
+ 
+
+如果想要改变它的大小、二维码颜色、背景色怎么办？不用着急，我们可以通过配置来得到我们想要的，接下来我们就看一看它的配置：
+复制代码
+
+jQuery("#qrcode").qrcode({
+    render: "canvas", // 渲染方式有table方式和canvas方式
+    width: 256,   //默认宽度
+    height: 256, //默认高度
+    text: "http://www.cnblogs.com/HtmlCss3/", //二维码内容
+    typeNumber: -1,   //计算模式一般默认为-1
+    correctLevel: 2, //二维码纠错级别
+    background: "#ffffff",  //背景颜色
+    foreground: "#000000"  //二维码颜色
+});
+
+jquery.qrcode.js二维码内容是不支持中文的，如果出现中文，结果就是一串乱码，这个主要是两者的编码方式不一样所导致的，中文一般情况下是UTF-16格式，如果想要支持中文，那就把二维码内容统一改成UTF-8格式的，顺便贴一下转换的代码：
+复制代码
+
+function utf16to8(str) {  
+    var out, i, len, c;  
+    out = "";  
+    len = str.length;  
+    for(i = 0; i < len; i++) {  
+    c = str.charCodeAt(i);  
+    if ((c >= 0x0001) && (c <= 0x007F)) {  
+        out += str.charAt(i);  
+    } else if (c > 0x07FF) {  
+        out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));  
+        out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F));  
+        out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));  
+    } else {  
+        out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F));  
+        out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));  
+    }  
+    }  
+    return out;  
+} 
+
+当你在配置的时候把二维码的内容转换一下就可以了~
+
+	text: utf16to8("文字内容")  //二维码内容
+
+ 
+
+有时候呢领导可能会让你把自己公司的logo放上去，但是jquery.qrcode.js又不支持这种自定义logo，这时候肿么办呢？其实也很简单，在div里创建一个img利用定位很容易就可以搞定它了
+})
+	

@@ -1,0 +1,27 @@
+时间显示：
+
+import React,{Component}from 'react'
+import ReactDOM from 'react-dom'
+ class TimeShow extends Component{
+	constructor(){
+	super()
+	this.state={
+		time:new Date()
+	}
+	}
+	componentWillMount(){
+	this.timer=setInterval(()=>{
+		this.setState({time:new Date()})
+	},1000)
+	}
+	render(){
+		return (
+		<div>
+		<p>{this.state.time.toLocaleTimeString()}</p>
+		</div>
+		)
+	}
+
+	
+ }
+ export default TimeShow;

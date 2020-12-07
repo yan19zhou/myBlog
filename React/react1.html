@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello React!</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+  <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+  <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="rrr"></div>
+    <div id="btn"></div>
+  <script type="text/babel" >              
+              <!--   var ea = React.createClass({  
+                  render: function() {  
+                    var elapsed = Math.round(this.props.elapsed  / 100);  
+                    var seconds = elapsed / 10 + (elapsed % 10 ? '' : '.0' );  
+                    var message = '开始计时：' + seconds + ' 秒';  
+                            
+                    return React.DOM.p(null, message);  
+                  }  
+              });  
+                            
+              var eaf = React.createFactory(ea);  
+              var startTime = new Date().getTime();  
+                setInterval(function() {  
+                  ReactDOM.render(  
+                    eaf({elapsed: new Date().getTime() - startTime}),document.getElementById('timer')  
+                  );  
+              }, 1000);   -->
+
+               var students = ["张三然","李慧思","赵思然","孙力气","钱流量"];  
+              
+            ReactDOM.render(  
+                <ul>  
+                    {  
+                        students.map(function(username){  
+                            return <li>{username}</li>  
+                        })  
+                    }  
+                </ul>,  
+                document.getElementById("ulLi")  
+            )  
+            </script>  
+        
+         
+            <div id="ulLi"></div>  
+        </body>  
+    </html>  
+  

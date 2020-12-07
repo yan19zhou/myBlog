@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<!-- <script type="text/javascript" src="./test.js"></script> -->
+	<style type="text/css">
+	#container{
+		margin-left: 50%
+	}
+	</style>
+</head>
+<body>
+
+<div id="container">
+0
+</div>
+<button id="btn" >T</button>
+<button id="btn1" >O</button>
+<script type="text/javascript">
+window.onload = function(){
+	var b1 = document.getElementById("btn1")
+		var b = document.getElementById("btn")
+		var c = document.getElementById("container")
+		b.onclick=function(){
+				
+	 		c.style.transform='translate3d(100px,0,0)'
+		}
+		b1.onclick=function(){
+
+	 		c.style.transform='translate3d(-100px,0,0)'
+		}
+
+	
+}
+</script>
+</body>
+</html>

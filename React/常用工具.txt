@@ -1,0 +1,2 @@
+react常用的库: polished.js;ramda.js
+构建工具 gulp
