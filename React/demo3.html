@@ -1,0 +1,35 @@
+<DOCTYPE! html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>React.Children.map</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+  <script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+  <script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+</head>
+<body>
+<div id="example"></div>
+	<script type="text/babel">
+		class NodeList extends React.Component{
+			render(){
+			 return (
+            <ol>
+			{
+			React.Children.map(this.props.children,function(child){
+				return <li>{child}</li>
+			})
+			}
+			</ol>
+            );
+			}
+		};
+		ReactDOM.render(
+		<NodeList>
+		<h2>React.children.map</h2>
+		<h4>this.props.children</h4>
+		</NodeList>,
+		document.getElementById("example")
+		)
+	</script>
+</body>
+</html>

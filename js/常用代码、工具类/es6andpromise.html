@@ -1,0 +1,193 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE> Demo </TITLE>
+<meta charset="utf-8">
+<META NAME="Keywords" CONTENT="">
+<META NAME="Description" CONTENT="">
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+
+ /* 
+ // 01 定义函数
+ var human={
+    breathe(name){
+      console.log(name+" is breathing...")
+    }
+  }
+human.breathe('liuming')*/
+  //02 定义类
+/* class Human{
+    constructor(name){
+      this.name=name
+    }
+    breathe(){
+      console.log(this.name+"is breathing.....")
+    }
+ }
+ var human=new Human('limeng')
+ human.breathe()*/
+// 03 继承 
+/* class Man extends Human {
+   constructor(name,sex){
+    super(name); // super是父类的构造函数
+    this.sex=sex
+   }
+   info(){
+    console.log(this.name+"..is a.."+this.sex)
+   }
+ }
+ var man=new Man('jok','girl')
+ man.breathe();
+ man.info()*/
+	// 04 箭头函数
+  /*let arr=[12,6,4,'5','b',62]
+  arr.forEach((item,index)=>{
+    console.log(`${index+1}:${item}`)	//字符串拼接
+  })
+  let newArr=arr.filter((item,index)=>{
+    return item<10
+  })
+  console.log(newArr)*/
+  // 05 字符串模板 取10到20的随机数
+  /* let arr=[]
+   while(arr.length<5){
+   let num=Math.floor(Math.random()*10+11)
+    if(arr.indexOf(num)<0){
+     arr.push(num)
+  }
+ }
+    console.log(`you num is: ${arr}`)*/
+  // 06 默认参数
+/*  function param(name='Tom'){
+    console.log(`my name is ${name}`)
+  }
+  param('lusi');
+  param()*/
+  // 07 从数组及对象中提取数据
+  /*const names=['liming','xiaoqian','shabi']
+    const[first,...rest]=names;
+    console.log(rest)
+    const[first,,second]=names;
+    console.log( first,second )*/
+/* const person={
+     name:'liming',
+     age:28,
+      facts:{
+       work:'software Developer',
+       hobby:'Photo'
+       }
+      } 
+   const {name,age}=person;
+   console.log({name,age})
+   const {facts:{hobby}}=person
+   console.log(hobby)
+   const {biqi='shabi'}=person
+   console.log(biqi)
+   const toString = ({name, age}) => {  
+        return `${name} is ${age} years old`;
+      }      
+       toString(person);*/
+  // 08 展开运算符
+/* function test(a,b,c){
+    console.log(a+b+c+1)
+  }
+  const arr=[1,25,65]
+  //test.apply(null,arr)
+	  test(...arr)
+	  const arr1=[1,2,3];
+	  let arr2=[...arr1,'a','b']
+	  console.log(arr2)
+	  let arr3=[5,3,2]
+	  arr3.push(...arr2)
+	  let arr4=[...new Set(arr3)] 
+	  console.log(arr4)*/
+// 09数组去重
+ /*let arr = [1, 2, 3, 3, 3, '0', '1', '2', '测试', '重复', '重复', NaN, NaN, false, false];
+ let arr1=[...new Set(arr)]
+  console.log(arr1)
+  arr.sort()
+ let temp=[];
+ while(arr.length>0){
+    if(Object.is(arr[0],arr[1])){
+      arr.shift()
+    }else{
+      temp.push(arr.shift())
+    }
+ }
+ console.log(temp)
+ let temp=[];
+ for (var i = 0; i < arr.length; i++) {
+   if (!temp.includes(arr[i])) {
+    temp.push(arr[i])
+   }
+ }
+ console.log(temp)*/
+ //练习题，加载promise数据
+/* getPostData().then((postContent)=>{...})
+class Post extends Component {
+  constructor(){
+    this.state={
+      content:''
+    }
+  }
+  componentWillMount(){
+     this._loadData
+  }
+  async_loadData(){
+    this.setState({content:'加载中。。。'})
+    const content=await getPostData()
+    this.setState({content:content})
+  }
+  render () {
+    return (
+      <div>
+        <div className='post-content'>{this.state.content}</div>
+        <button onClick={this._loadData.bind(this)}>刷新</button>
+      </div>
+    )
+  }
+}*/
+//promise：
+/*function takeLongTime (){
+ return  new Promise((resolver)={
+})}
+ takeLongTime().then((v)=>{
+  console.log(v)//使用then提取返回的数据
+ })
+ async getData(){
+  const v=await takeLongTime();//使用async await
+  console.log(v)
+ }
+ getData()*/
+ function tick() {
+  const element = (
+    <div>
+      <h1>Hello, world!</h1>
+      <h2>It is {new Date().toLocaleTimeString()}.</h2>
+    </div>
+  );
+  ReactDOM.render(
+    element,
+    document.getElementById('root')
+  );
+}
+
+setInterval(tick, 1000);
+</script>
+<style type="text/css">
+  .caption{}
+  div{width: 500px;height:200px;border: solid 1px red;text-overflow: ellipsis;
+white-space: nowrap;
+overflow: hidden;color: green}
+</style>
+</HEAD>
+<BODY>
+<div>
+  <span>Morbi in sem quis dui placerat ornare. Pellentesque odio nisi, euismod in, pharetra a, ultricies in, diam. Sed arcu. Cras consequat. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. Nam nulla quam, gravida non, commodo a, sodales sit amet, nisi.Pellentesque fermentum dolor. Aliquam quam lectus, facilisis auctor, ultrices ut, elementum vulputate, nunc.[...new Set(arr)],sort=>while...Object.is(a,b),temp.includes(arr[i])</span>
+</div>
+<button class='btn'>this is a button</button>
+
+</BODY>
+</HTML>

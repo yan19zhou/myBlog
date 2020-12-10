@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<style type="text/css">
+#div1, #div2
+{float:left; width:198px; height:66px; margin:10px;padding:10px;border:1px solid #aaaaaa;}
+.box{
+    width: 5%;
+    height: 0;
+    padding-bottom: 20%;
+    background-color: #ccc;
+    position: absolute;
+}
+</style>
+
+</head>
+<body>
+
+<!-- <div id="div1" >
+		<img id="drag1" src=".\img\1 (4).jpeg" draggable="true" style="width: 100px">
+	 </div>
+<div id="div2" ></div> -->
+<div class="box">
+<ul>
+	<li>1.</li>
+	<li>2.</li>
+	<li>3.</li>
+	<li>4.</li>
+</ul>
+</div>
+<script type="text/javascript">
+	$(function () {		
+		$('.box').on('mousedown',function(e) {
+		var positionDiv = $(this).offset();
+		var distenceX = e.pageX - positionDiv.left;
+		var distenceY = e.pageY - positionDiv.top;
+
+		$(document).mousemove(function(e) {
+		var x = e.pageX - distenceX;
+		var y = e.pageY - distenceY;
+		if (x < 0) {
+		x = 0;
+		} else if (x > $(document).width() - $('.box').outerWidth(true)) {
+		x = $(document).width() - $('.box').outerWidth(true);
+		}
+		if (y < 0) {
+		y = 0;
+		} else if (y > $(document).height() - $('.box').outerHeight(true)) {
+		y = $(document).height() - $('.box').outerHeight(true);
+		}
+		$('.box').css({
+		'left': x + 'px',
+		'top': y + 'px'
+		});
+		});
+		$(document).mouseup(function() {
+		$(document).off('mousemove');
+		});
+		return false;
+		});
+	})
+/**
+	
+
+
+*/
+
+</script>
+</body>
+</html>
