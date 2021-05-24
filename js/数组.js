@@ -107,7 +107,120 @@
 	
 	
 	
-	
+2，对 Array 进行扩展
+
+(1)为方便使用，我们可以对数组功能进行扩展，增加一些常用的方法。
+
+//数组功能扩展
+
+//数组迭代函数
+
+Array.prototype.each = function(fn){
+fn = fn || Function.K;
+
+var a = [];
+
+var args = Array.prototype.slice.call(arguments, 1);
+
+for(var i = 0; i < this.length; i++){
+var res = fn.apply(this,[this[i],i].concat(args));
+
+if(res != null) a.push(res);
+
+}
+
+return a;
+
+};
+
+//数组是否包含指定元素
+
+Array.prototype.contains = function(suArr){
+for(var i = 0; i < this.length; i ++){
+if(this[i] == suArr){
+return true;
+
+}
+
+}
+
+return false;
+
+}
+
+//不重复元素构成的数组
+
+Array.prototype.uniquelize = function(){
+var ra = new Array();
+
+for(var i = 0; i < this.length; i ++){
+if(!ra.contains(this[i])){
+ra.push(this[i]);
+
+}
+
+}
+
+return ra;
+
+};
+
+//两个数组的交集
+
+Array.intersect = function(a, b){
+return a.uniquelize().each(function(o){return b.contains(o) ? o : null});
+
+};
+
+//两个数组的差集
+
+Array.minus = function(a, b){
+return a.uniquelize().each(function(o){return b.contains(o) ? null : o});
+
+};
+
+//两个数组的补集
+
+Array.complement = function(a, b){
+return Array.minus(Array.union(a, b),Array.intersect(a, b));
+
+};
+
+//两个数组并集
+
+Array.union = function(a, b){
+return a.concat(b).uniquelize();
+
+};
+
+//(2)使用样例
+
+var a = [1,2,3,4,5]
+
+var b = [2,4,6,8,10]
+
+console.log("数组a：", a);
+
+console.log("数组b：", b);
+
+console.log("a与b的交集：", Array.intersect(a, b));
+
+console.log("a与b的差集：", Array.minus(a, b));
+
+console.log("a与b的补集：", Array.complement(a, b));
+
+console.log("a与b的并集：", Array.union(a, b));
+
+// (3)运行结果同上面一样。
+
+
+
+// 方法二：使用 ES6 语法实现
+
+// 1，实现原理
+
+// 而在 ES6中我们可以借助扩展运算符(...)以及 Set的特性实现相关计算，代码也会更加简单些
+
 	
 	
 	
