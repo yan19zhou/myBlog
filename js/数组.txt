@@ -1,4 +1,3 @@
-
 数组：array：
 栈方法
 	1.后入：push();先出pop();在数组尾部添加或弹出数数据，push()返回修改后的数组长度，pop()返回弹出的数据；
@@ -47,6 +46,7 @@
 				console.log(this[index])  //=>z,i,k,s,a,n 类型都是String类型
 			},obj)
 			
+
 			ps:forEach返回值是undefined，map返回的是一个新数组，原数组不变
 	2.map():对数组的每一项返回，影射成一个新数组；
 		如：var array = [1,3,4,5,6]
@@ -104,9 +104,10 @@
 			}
 		})
 		console.log(sum)	
-	
-	
-	
+
+
+​	
+​	
 2，对 Array 进行扩展
 
 (1)为方便使用，我们可以对数组功能进行扩展，增加一些常用的方法。
@@ -221,14 +222,111 @@ console.log("a与b的并集：", Array.union(a, b));
 
 // 而在 ES6中我们可以借助扩展运算符(...)以及 Set的特性实现相关计算，代码也会更加简单些
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+#### 10、Array.flat
+
+```javascript
+const arr = [1, 2, 3, [4, 5, 6, [7, 8, 9]]]
+
+console.log(arr.flat(2))
+[
+  1, 2, 3, 4, 5,
+  6, 7, 8, 9
+]
+
+```
+
+
+
+#### 11、Array.flatMap
+
+```javascript
+现在给你一个需求
+let arr = ["科比 詹姆斯 安东尼", "利拉德 罗斯 麦科勒姆"];
+将上面数组转为
+[ '科比', '詹姆斯', '安东尼', '利拉德', '罗斯', '麦科勒姆' ]
+第一时间想到map + flat
+console.log(arr.map(x => x.split(" ")).flat());
+// [ '科比', '詹姆斯', '安东尼', '利拉德', '罗斯', '麦科勒姆' ]
+flatMap就是flat + map，一个方法顶两个
+console.log(arr.flatMap(x => x.split(" ")));
+// [ '科比', '詹姆斯', '安东尼', '利拉德', '罗斯', '麦科勒姆' ]
+
+```
+
+#### ?. 和 ??
+
+````javascript
+//比如我们需要一个变量，是数组且有长度，才做某些操作
+const list = null
+// do something
+if (list && list.length) {
+  // do something
+}
+
+// 使用可选链
+const list = null
+// do something
+if (list?.length) {
+  // do something
+}
+
+//比如有一个对象，我要取一个可能不存在的值，甚至我们都不确定obj是否存在
+const obj = {
+  cat: {
+    name: '哈哈'
+  }
+}
+const dog = obj && obj.dog && obj.dog.name // undefined
+
+// 可选链
+const obj = {
+  cat: {
+    name: '哈哈'
+  }
+}
+const dog = obj?.dog?.name // undefined
+
+//比如有一个数组，我不确定它存不存在，存在的话就取索引为1的值
+
+const arr = null
+// do something
+const item = arr && arr[1]
+
+// 可选链
+const arr = null
+// do something
+const item = arr?.[1]
+
+// 比如有一个函数，我们不确定它存不存在，存在的话就执行它
+const fn = null
+// do something
+const res = fn && fn()
+
+// 可选链
+const fn = null
+// do something
+const res = fn?.()
+
+````
+
+
+
+
+
+### ||= 和 &&=
+
+```javascript
+或等于(||=)   a ||= b 等同于 a || (a = b);
+
+且等于(&&=)   a &&= b 等同于 a && (a = b);
+
+```
+
+​	
+​	
+​	
+​	
+​	
+​	
+​	
+​	

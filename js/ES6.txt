@@ -406,11 +406,41 @@ http://www.cnblogs.com/jarson-7426/p/5481491.html
 		// 判断generator是否走完程序可以通过 done是否为true来判断
 		
 		
+	12.求幂运算符
+		> 以前这么写：
+
+		``` const num = Math.pow(3, 2) // 9
 		
+		> ES7的求幂运算符：**
+
+		``` const num = 3 ** 2 // 9
 		
+	13.for await of 通过循环来输出await结果
 		
-		
-		
+	 ```
+	 function fn (time) {
+		return new Promise((resolve, reject) => {
+		  setTimeout(() => {
+			resolve(`${time}毫秒后我成功啦！！！`)
+		  }, time)
+		})
+	  }
+	  
+	  async function asyncFn () {
+		const arr = [fn(3000), fn(1000), fn(1000), fn(2000), fn(500)]
+		for await (let x of arr) {
+		  console.log(x)
+		}
+	  }
+	  
+	  asyncFn()
+	  3000毫秒后我成功啦！！！
+	  1000毫秒后我成功啦！！！
+	  1000毫秒后我成功啦！！！
+	  2000毫秒后我成功啦！！！
+	  500毫秒后我成功啦！！！
+
+ 14.Array.flat
 		
 		
 		
