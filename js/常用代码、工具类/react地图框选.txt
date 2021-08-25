@@ -1,3 +1,4 @@
+```javascript
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import request from '../../utils/request';
@@ -166,7 +167,7 @@ class GoogleMapSearch extends Component {
             //https://stackoverflow.com/questions/24412325/resizing-a-leaflet-map-on-container-resize
             map.invalidateSize();
         }, 100);
-
+    
         const opts = {
             minZoom: mapServer.mapZoom.minZoom,
             maxZoom: mapServer.mapZoom.maxZoom,
@@ -232,7 +233,7 @@ class GoogleMapSearch extends Component {
                     } else {
                         pointFin = selectedPoint;
                     }
-
+    
                     // console.log('zml selectedPoint,pointOld,pointFin', selectedPoint,pointOld,pointFin);
                     this.setState({
                             // pointListSelected: selectedPoint,
@@ -296,17 +297,17 @@ class GoogleMapSearch extends Component {
             });
             let newSlayer = [...selectLayer].filter(x => [...selectLayerRemove].every(y => y._leaflet_id != x._leaflet_id));
             let pointT = [...this.state.pointTempLayer].filter(x => [...selectLayerRemove].every(y => y._leaflet_id != x._leaflet_id));
-
+    
             newSlayer.forEach(ns => {
                 this.getIcon(ns, 'add');
             });
-
+    
             this.setState({
                 pointListSelected: oldSelectPo,
                 pointTempLayer: newSlayer.concat(pointT),
                 isShowCameraBox: pointListNewSelected.length ? true : false
             });
-
+    
             //初次框选的摄像头传入redux保存--影响传图检索和dingdianbarcount
             setTimeout(() => {
                 let selecCam = [];
@@ -319,7 +320,7 @@ class GoogleMapSearch extends Component {
         //鼠标右击上下文菜单事件
         map.on('contextmenu', () => {
             this.cancelDrawRect();
-
+    
             return false;
         });
         this.setState({
@@ -330,7 +331,7 @@ class GoogleMapSearch extends Component {
             }
         );
     };
-
+    
     isChangeFirstState = (props, nextProps) => {
         let propsObj = {
             starttime: props.starttime, //过滤项，时间范围-开始时间
@@ -374,7 +375,7 @@ class GoogleMapSearch extends Component {
                 isFirstSearch: true
             });
         }
-
+    
         if (!_.isEqual(propsObj, propsNextObj)) {
             this.setState({
                 isFirstSearch: true
@@ -384,7 +385,7 @@ class GoogleMapSearch extends Component {
             this.state.map.closePopup();
         }
     };
-
+    
     //获取所有摄像头列表
     getAllCameraList = props => {
         this.setState({
@@ -561,7 +562,7 @@ class GoogleMapSearch extends Component {
             });
         });
     };
-
+    
     renderMarker = obj => {
         let ifSelect = '';
         //选中特定摄像头跳转至GIS增加跳动动效
@@ -743,7 +744,7 @@ class GoogleMapSearch extends Component {
         isChangeZoom = isChangeZoom || false;
         let props = this.props;
         let _this = this; //地图里面this替换为了map的this
-
+    
         const { map, pointsMarkersArr, points } = this.state;
         if (!resPointArr.length) {
             this.removeCamera(map);
@@ -752,7 +753,7 @@ class GoogleMapSearch extends Component {
         //集群所包含的标注物
         let markerArr = [];
         pointsMarkersArr.length && this.removeCamera(this.state.map);
-
+    
         //Leaflet.markercluster：https://github.com/Leaflet/Leaflet.markercluster
         //创建标注物集群对象
         var markers = L.markerClusterGroup({
@@ -842,7 +843,7 @@ class GoogleMapSearch extends Component {
                 '当前点位包含' + a.layer.getAllChildMarkers().length + '个重叠的摄像头'
             );
         });
-
+    
         if (
             props.CurrentMode == 'search' &&
             props.ids.length > 0 &&
@@ -920,7 +921,7 @@ class GoogleMapSearch extends Component {
     // 移除摄像头
     removeCamera = map => {
         const pointsMarkersArr = this.state.pointsMarkersArr;
-
+    
         if (pointsMarkersArr && pointsMarkersArr.length > 0) {
             const l = pointsMarkersArr.length;
             for (let i = 0; i < l; i++) {
@@ -936,7 +937,7 @@ class GoogleMapSearch extends Component {
     //渲染热力图
     hotMapFun = (map, points = this.state.points) => {
         let hasCount = points.some(m => m.captureCount > 0);
-
+    
         if (!hasCount) {
             this.setState({
                 hotMap: {
@@ -1013,7 +1014,7 @@ class GoogleMapSearch extends Component {
                             name: pointArr[0].name,
                             type: this.props.type
                         });
-
+    
                         changeRequestNum && changeRequestNum();
                     }
                 );
@@ -1048,12 +1049,12 @@ class GoogleMapSearch extends Component {
                     '</h5>' +
                     '</li>';
             }
-
+    
             let title_h5 = (this._title_h5 = document.createElement('h5'));
             title_h5.innerHTML = intl.get('PLEASE_CHOOSE');
             title_h5.className = 'camera-box-title';
             div.appendChild(title_h5);
-
+    
             let ul = (this._ul = document.createElement('ul'));
             ul.className = 'listbox-ul';
             ul.innerHTML = tempLi;
@@ -1073,7 +1074,7 @@ class GoogleMapSearch extends Component {
                 ) {
                     let type = e.target.getAttribute('type');
                     let singlePoint = pointArr[e.target.getAttribute('index')];
-
+    
                     if (CurrentMode === 'capture') {
                         _this.captureEvent({ type: type, point: singlePoint });
                     } else if (CurrentMode === 'search') {
@@ -1090,7 +1091,7 @@ class GoogleMapSearch extends Component {
                                     name: singlePoint.name,
                                     type: _this.props.type
                                 });
-
+    
                                 changeRequestNum && changeRequestNum();
                                 // _this.isShowCameraBox([], -1); //取消box列表
                             }
@@ -1102,7 +1103,7 @@ class GoogleMapSearch extends Component {
                 e.preventDefault();
                 e.stopPropagation();
             };
-
+    
             L.popup()
                 .setLatLng(latlng)
                 .setContent(div)
@@ -1152,7 +1153,7 @@ class GoogleMapSearch extends Component {
             });
         }
     };
-
+    
     // 设置地图右上角按钮的状态
     btnStateInMap(type, data) {
             // 先清除之前选择的状态，此处未判断之前是否选中，一律清除
@@ -1187,7 +1188,7 @@ class GoogleMapSearch extends Component {
             this.props.onChangeCameraFilterFromMap(cameraIds);
             !cameraIds.length && this.getFirstPicInMapCamera(this.props, false);
         }, 300);
-
+    
         let newPoint = this.state.pointListSelected;
         if (index != -1) {
             //减色与marker联动
@@ -1216,7 +1217,7 @@ class GoogleMapSearch extends Component {
         this.setState({
             pointListSelected: newPoint
         });
-
+    
         if (points.length) {
             this.setState({
                 isShowCameraBox: true
@@ -1245,7 +1246,7 @@ class GoogleMapSearch extends Component {
             }, 500);
         }
     };
-
+    
     jumpToAnalysis = e => {
         e.stopPropagation();
         // const {
@@ -1290,7 +1291,7 @@ class GoogleMapSearch extends Component {
             filterSelectedTags //已选择的属性（支持多选）
         } = this.props;
         const { menuId, menuType } = selectMenuData;
-
+    
         const searchParam = {
             faceSize,
             nodeType: menuType,
@@ -1348,7 +1349,7 @@ class GoogleMapSearch extends Component {
         localStorage.setItem('UploadFaceData', JSON.stringify(uploadFaceList));
         window.open(`http://${env.host}/pathAnalysis`);
     };
-
+    
     render() {
         const {
             CurrentMode,
@@ -1429,7 +1430,7 @@ class GoogleMapSearch extends Component {
                     intl.get('HIDE_HOT_MAP')
             } <
             /span>
-
+    
             {
                 CurrentMode === 'search' && ( <
                     span onClick = { this.clickMain.bind(this, 'drawRect', 'append') }
@@ -1451,7 +1452,7 @@ class GoogleMapSearch extends Component {
                 )
             } <
             /h5>
-
+    
             <
             div id = "mapContianer"
             className = "map-container"
@@ -1460,6 +1461,7 @@ class GoogleMapSearch extends Component {
             /div>
         );
     }
+
 }
 
 export default GoogleMapSearch;
@@ -1468,3 +1470,5 @@ export default GoogleMapSearch;
 
 // WEBPACK FOOTER //
 // ./src/components/Map/GoogleMapSearch.js
+```
+

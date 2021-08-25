@@ -1,6 +1,0 @@
-    filterNode(value, data) {
-      if (!value) return true;
-      //增加不区分大小写过滤
-      let reg = new RegExp(value, "i");
-      if (data.nodeName.match(reg)) return data.nodeName.match(reg)[0] != null;
-    },

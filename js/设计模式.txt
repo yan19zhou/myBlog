@@ -63,10 +63,6 @@ SingleForm.getInstance = (function() {
 
 
 
-
-
-
-
 ##### 适配器模式
 
 > 可以让两个没有关联的类一起运行，适用于封装旧接口，或者第三方sdk。 

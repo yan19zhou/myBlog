@@ -1,6 +1,7 @@
 李运通，微医前端技术部前端工程师。最怕你一生碌碌无为，还安慰自己平凡可贵。
 
 #### **设计模式解决什么痛点？**
+
 它是解决特定问题的一系列套路，是前辈们的代码设计经验的总结，具有一定的普遍性，可以反复使用。其目的是为了提高代码的可复用性、可读性、可维护性。
 设计模式的本质是面向对象设计原则的实际运用，是对类的封装性、继承性和多态性以及类的关联关系和组合关系的充分理解。
 不要重复造轮子。
@@ -68,11 +69,11 @@
 行为型：观察模板迭代的状态，命令中介解释职责链，访问策略备忘录
 观察者、模板、迭代、状态、命令、中介者、解释器、职责链、访问者、策略、备忘录
 
-##### 创建型设计模式
+#### 创建型设计模式
 
 封装对象创建过程，将对象的创建和使用解耦
 
-##### 单例模式
+#### 单例模式
 
 应用场景
 处理资源访问冲突、用来创建全局唯一类
@@ -82,14 +83,14 @@
 饿汉式：系统启动时创建（场景：必定用到、临时创建影响响应速度）
 多例：同一类的固定个数相同实例
 
-##### 工厂模式
+#### 工厂模式
 
 应用场景
 用来创建继承同一父类、实现同一接口的子类对象，由给定的类型参数创建具体的对象。
 
 解决方案
 
-```java
+```javascript
 enum HelloType {
   A,
   B
@@ -127,14 +128,14 @@ HelloFactory.getHello(HelloType.A).sayHello()
 HelloFactory.getHello(HelloType.B).sayHello()
 ```
 
-##### 抽象工厂模式
+#### 抽象工厂模式
 
 应用场景
 继承同一父类、实现同一接口的子类对象，由给定的多个类型参数创建具体的对象。
 
 解决方案
 
-```
+```javascript
 enum Type {
   A,
   B
@@ -213,7 +214,7 @@ HelloFactory.getType(Type.B).getHello(Occupation.TEACHER).sayHello()
 HelloFactory.getType(Type.B).getHello(Occupation.STUDENT).sayHello()
 ```
 
-##### 建造者模式
+#### 建造者模式
 
 应用场景
 创建时有很多必填参数需要验证
@@ -221,7 +222,7 @@ HelloFactory.getType(Type.B).getHello(Occupation.STUDENT).sayHello()
 创建有很多步骤，全部成功才能创建对象
 解决方案
 
-```
+```javascript
 class Programmer {
   age: number
   username: string
@@ -297,7 +298,7 @@ const p = new Builder()
   .toString()
 ```
 
-##### 原型模式
+#### 原型模式
 
 应用场景
 原型模式是基于已有的对象克隆数据，而不是修改原型链！
@@ -308,7 +309,7 @@ const p = new Builder()
 结构型设计模式
 总结了一些类或对象组合在一起的经典结构，这些经典结构可以解决特定应用场景的问题，将类或对象的结构和使用解耦
 
-##### 桥接模式
+#### 桥接模式
 
 应用场景
 将抽象和实现解耦，让它们可以独立变化
@@ -316,7 +317,7 @@ const p = new Builder()
 非常类似于组合优于继承原则
 解决方案
 
-```
+```javascript
 enum MsgLevel {
   ERROR,
   WARN,
@@ -378,7 +379,7 @@ new EmailSend(new WarnMsg()).send()
 new EmailSend(new ErrorMsg()).send()
 ```
 
-##### 代理模式
+#### 代理模式
 
 应用场景
 给原类添加非功能性需求，为了将代码与原业务解耦
@@ -386,7 +387,7 @@ new EmailSend(new ErrorMsg()).send()
 解决方案
 通过继承实现（不推荐）
 
-```
+```javascript
 class User{
   login(){
     console.log('user login...')
@@ -422,7 +423,7 @@ class UserProxy implements Login {
 }
 ```
 
-##### 装饰器模式
+#### 装饰器模式
 
 应用场景
 装饰器类是对原始功能的增强
@@ -432,7 +433,7 @@ class UserProxy implements Login {
 解决方案
 通过 AOP 实现
 
-```
+```javascript
 Function.prototype.before = function (beforeFn) {
   return (...arg) => {
     beforeFn(...arg);
@@ -461,9 +462,31 @@ function ImportEvent3 {
 
 // test
 ImportEvent2.before(ImportEvent1).after(ImportEvent3)()
+
+
+class Celliphone {
+  create() {
+    console.log("生产一个iphone");
+  }
+}
+
+class Decorator {
+  constructor(celliphone) {
+    this.celliphone = celliphone;
+  }
+  create() {
+    this.celliphone.create();
+    this.createShell(cellphone);
+  }
+  createShell() {}
+}
+
+let celliphone = new Celliphone();
+let decorator = new Decorator(celliphone);
+decorator.create();
 ```
 
-##### 适配器模式
+#### 适配器模式
 
 应用场景
 适配器模式用于补救设计上的缺陷，将不兼容的接口变得兼容
@@ -477,7 +500,7 @@ ImportEvent2.before(ImportEvent1).after(ImportEvent3)()
 如果原类方法很多，并且和目标接口差异小，用类适配器减少代码量
 如果原类方法很多，并且和目标接口差异大，用对象适配器，组合优于继承
 
-```
+```javascript
 // 目标接口格式
 interface ITarget {
   f1()
@@ -513,16 +536,39 @@ class Adaptor implements ITarget {
     this.origin.f3()
   }
 }
+//
+class OldAPI{
+    getName(){
+        return '...'
+    }
+}
+class NewAPI{
+    constructor(){
+        this.api = new OldAPI();
+    }
+    getName(){
+        //做一层封装修改
+        return this.api.getName+'....';
+    }
+}
+
+//vue中的computed
+
+computed:{
+    message(){
+    return this.message+'.....'
+}
+}
 ```
 
-##### 享元模式
+#### 享元模式
 
 应用场景
 共享的单元。复用对象，节省内存，前提是享元对象是不可变对象(初始化之后不再改变)。
 解决方案
 比如网上象棋游戏有1000个房间，每个房间有1个棋盘，棋盘当前状态(棋子位置)各不相同，但棋子的大小、颜色、名字是相同且固定的，可以设计成享元
 
-##### 组合模式
+#### 组合模式
 
 应用场景
 将一组对象组织成树形结构，以表示一种“部分-整体”的层次结构。组合模式让客户端可以统一单个对象和组合对象的处理逻辑(递归遍历)
@@ -571,7 +617,7 @@ class Directory extends FileSystemNode {
 }
 ```
 
-##### 门面(外观)模式
+#### 门面(外观)模式
 
 应用场景
 将多个后端接口请求合并为一个（冗余接口），提高响应速度，解决性能问题
@@ -579,7 +625,7 @@ class Directory extends FileSystemNode {
 行为型设计模式
 总结了一些类或对象交互的经典方式，将该行为相关的类或对象解耦
 
-##### 观察者模式
+#### 观察者模式
 
 应用场景
 将观察者与被观察者解耦
@@ -634,7 +680,7 @@ subject.addObserver(observer);
 subject.notify();
 ```
 
-##### 模板模式
+#### 模板模式
 
 应用场景
 在一个方法里定义一个算法(业务逻辑)骨架，并将某些步骤推迟到子类中实现。模板方法模式可以让子类在不改变算法整体结构的情况下，重新定义算法中的某些步骤。
@@ -690,7 +736,7 @@ const coffee = new Coffee()
 coffee.drink()
 ```
 
-##### 策略模式
+#### 策略模式
 
 应用场景
 定义一族算法族，将每个算法分别封装起来，让他们可以相互替换。
@@ -723,7 +769,7 @@ const calculateBonus = function (level: StrategyType, salary: number) {
 calculateBonus(StrategyType.A, 10000) // 30000
 ```
 
-##### 职责链模式
+#### 职责链模式
 
 应用场景
 多个处理器 ABC 依次处理同一个请求，形成一个链条，当某个处理器能处理这个请求，就不会继续传递给后续处理器了
@@ -790,7 +836,7 @@ order200New.setNext(orderCommonNew);
 order500New.init(3, true, 500); // 普通购买, 无优惠券
 ```
 
-##### 状态模式
+#### 状态模式
 
 应用场景
 将事物内部的每个状态分别封装成类, 内部状态改变会产生不同行为
@@ -869,7 +915,7 @@ light.press()
 light.press()
 ```
 
-##### 迭代器模式
+#### 迭代器模式
 
 应用场景
 遍历集合对象
@@ -915,7 +961,7 @@ class Programmer {
 }
 ```
 
-##### 命令模式
+#### 命令模式
 
 应用场景
 命令模式的主要作用和应用场景，是用来控制命令的执行，比如，异步、延迟、排队执行命令、撤销重做命令、存储命令、给命令记录日志等。将命令的发起者和执行者解耦。
@@ -966,12 +1012,12 @@ commandManager.addCommand(new openQQCommand());
 commandManager.execute();
 ```
 
-##### 解释器模式
+#### 解释器模式
 
 应用场景
 给定一个语言，定义它的文法表示，并定义一个解释器，这个解释器使用该标识来解释语言中的句子
 
-##### 中介模式
+#### 中介模式
 
 应用场景
 中介模式的设计思想跟中间层很像，通过引入中介这个中间层，将一组对象之间的交互关系（依赖关系）转换成一对多（星状关系）。原本一个对象要跟n个对象交互，现在只需要跟一个中介对象交互，从而最小化对象间的交互关系，降低了代码复杂度，提高了代码的可读性和可维护性。

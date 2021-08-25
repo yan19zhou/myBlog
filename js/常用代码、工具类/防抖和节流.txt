@@ -35,27 +35,33 @@
     就是指连续触发事件但是在 n 秒中只执行一次函数。节流会稀释函数的执行频率。   
     /**
     * @desc 函数节流
-    * @param fn 函数
-    * @param interval 延迟执行毫秒数
+    * @param func 函数
+    * @param wait 延迟执行毫秒数
+    * @param type 1 表时间戳版，2 表定时器版
     */
-	export function _throttle(fn, interval) {
-		var last;
-		var timer;
-		var interval = interval || 200;
-		return function () {
-			var th = this;
-			var args = arguments;
-			var now = +new Date();
-			if (last && now - last < interval) {
-				clearTimeout(timer);
-				timer = setTimeout(function () {
-					last = now;
-					fn.apply(th, args);
-				}, interval);
-			} else {
-				last = now;
-				fn.apply(th, args);
-			}
-		}
-	}
+    function throttle(func, wait ,type) {
+        if(type===1){
+            let previous = 0;
+        }else if(type===2){
+            let timeout;
+        }
+        return function() {
+            let context = this;
+            let args = arguments;
+            if(type===1){
+                let now = Date.now();
 
+                if (now - previous > wait) {
+                    func.apply(context, args);
+                    previous = now;
+                }
+            }else if(type===2){
+                if (!timeout) {
+                    timeout = setTimeout(() => {
+                        timeout = null;
+                        func.apply(context, args)
+                    }, wait)
+                }
+            }
+        }
+    }

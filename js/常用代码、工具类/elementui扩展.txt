@@ -1,0 +1,51 @@
+### 不区分大小写过滤
+
+```javascript
+filterNode(value, data) {
+  if (!value) return true;
+  //增加不区分大小写过滤
+  let reg = new RegExp(value, "i");
+  if (data.nodeName.match(reg)) return data.nodeName.match(reg)[0] != null;
+},
+```
+
+### 原来el-cascader组件适配
+
+> 适配需求：父级可以多选，子集单选，如果父级有下属子集则不能选择
+
+> 分析：1.解析树状数据，如果父级有子集则设置disabled为true，则父级不能选择
+>
+> ​			2.子集多选：添加一个属性用来存放前一个选择的数据，对比数据得到新添加的节点，再用新添加的节点替换之前的同级节点		
+
+```
+   data(){
+       return {
+           prePersonTypes:[]
+       }
+   }
+
+ personTypeChange(e) {
+      // 控制人员类型子类只能单选
+      if (e.length > 1) {
+        // 判断出新选中的node
+        let diff = e.filter((item) => {
+          return item.length > 1 && !this.prePersonTypes.includes(item[1]);
+        });
+        let last = diff.length && diff[0];
+        let temp = JSON.parse(JSON.stringify(e));
+        temp = temp.map((item) => {
+          if (item[0] == last[0]) {
+            return [];
+          }
+          return item;
+        });
+        temp = temp.filter((item) => {
+          return item.length;
+        });
+        temp.push(last);
+        this.$set(this.tableOption, "jobIdList", temp);
+      }
+      this.prePersonTypes = [...new Set(this.tableOption.jobIdList.flat(2))];
+    },
+```
+
