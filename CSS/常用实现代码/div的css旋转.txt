@@ -1,4 +1,4 @@
-
+```css
 .left_box .button > li {
     position: absolute;
     width: 156px;
@@ -29,12 +29,12 @@
         -webkit-animation: inverse 6s linear 0s infinite;
         -o-animation: inverse 6s linear 0s infinite;
     }
-
+    
     .left_box .button > li:hover,
     .left_box .button > li:hover > a {
         -webkit-animation-play-state: paused;
     }
-
+    
         .left_box .button > li:hover > a,
         .left_box .button > li.active > a {
             text-shadow: 0 0 10px #ffcc00, 0 0 10px #ffcc00;
@@ -48,6 +48,7 @@
     to {
         -webkit-transform: rotate(360deg);
     }
+
 }
 
 @-webkit-keyframes inverse {
@@ -58,4 +59,7 @@
     to {
         -webkit-transform: rotate(-360deg);
     }
+
 }
+```
+

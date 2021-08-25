@@ -1,3 +1,0 @@
-H5常用知识
-	1.移动端自适应meta标签：<meta name="viewport" content="width=width-device,initial-scale=1;minimum-scale=1,maximum-scale=1,user-scalable=no"/>
-	

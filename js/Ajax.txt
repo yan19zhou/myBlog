@@ -1,39 +1,49 @@
-Ajax:
-//各大浏览器支持ajax的方式略有不同：
-1.普通的标准浏览器：
-	var xhr=new XMLHttpRequest();
-2.ie7以下IE版本：
-	var xhr=new ActiveXObject("Msxml2.XMLHTTP");
+### Ajax:
 
-//ajax没有破坏js单线程机制：
- 浏览器有4种线程：
-	 1.GUI渲染线程；
-	 2.js引擎线程；
-	 3.浏览器事件触发线程；
-	 4.http请求线程；
-	 线程间交互以事件的方式发生，通过事件回调的方式通知，事件回调通过先进先出的方式添加到任务队列，任务队列中的回调事件在js引擎空闲时依次执行；
-	 这些回调包括：setTimeOut setInterval,click,ajax等；
- //浏览器中，js引擎线程会循环从任务队列中读取事件并执行，这种机制成为event Loop(事件循环)；
- 对于一个ajax请求，首先生成一个xmlhttpRequest对象，open过后，调用send方法，这时产生了http请求，请求被异步发送出去，js引擎不会等待回应而继续执行其他动作；当response后，浏览器监捕获到了ajax的回调事件onreadystatechange，然后将此事件添加到任务队列的末尾；直到js引擎空闲了再执行；
-	 在onreadystatechange内部可能会执行dom事件，执行GUI渲染线程，对UI进行重绘或回流，当JS引擎重新执行时，GUI线程会暂时挂起，等引擎空闲时执行；
- //ajax和setTimeOut排队问题：
-	ajax和setTimeOut的回调事件会按照顺序自动添加到任务列队，依次执行，然而，ajax并非所有事件都是异步，
-	readyState==1的onreadystatechange回调和onloadstart回调是同步执行的
- //XMLHttpRequest对象属性解读：
- 1.在谷歌浏览器console中创建一个XMLHttpRequest对象并输出他
- //继承：inherit
-	XMLHttpRequest 实例对象没有自有属性. 实际上, 它的所有属性均来自于 XMLHttpRequest.prototype .
-	追根溯源, XMLHttpRequest 实例对象具有如下的继承关系. (下面以a<<b表示a继承b)
-	xhr << XMLHttpRequest.prototype << XMLHttpRequestEventTarget.prototype << EventTarget.prototype << Object.prototype
-	由上, xhr也具有Object等原型中的所有方法. 如toString方法.
-//readyState只读属性：
-	 readyState属性记录了ajax调用过程中所有可能的状态. 它的取值简单明了, 如下:
-			readyState 	对应常量 	                  描述
-		0 (未初始化) 	xhr.UNSENT 	            请求已建立, 但未初始化(此时未调用open方法)
-		1 (初始化) 	    xhr.OPENED 	            请求已建立, 但未发送 (已调用open方法, 但未调用send方法)
-		2 (发送数据) 	xhr.HEADERS_RECEIVED 	请求已发送 (send方法已调用, 已收到响应头)
-		3 (数据传送中) 	xhr.LOADING 	        请求处理中, 因响应内容不全, 这时通过responseBody和responseText获取可能会出现错误
-		4 (完成) 	    xhr.DONE 	            数据接收完毕, 此时可以通过通过responseBody和responseText获取完整的响应数据
+> 各大浏览器支持ajax的方式略有不同：
+
+- 1.普通的标准浏览器：
+  - var xhr=new XMLHttpRequest();
+- 2.ie7以下IE版本：
+  - var xhr=new ActiveXObject("Msxml2.XMLHTTP");
+
+> ajax没有破坏js单线程机制：
+
+#####  浏览器有4种线程：
+
+- 1.GUI渲染线程；
+
+- 2.js引擎线程；
+
+- 3.浏览器事件触发线程
+
+- 4.http请求线程；
+
+  > 线程间交互以事件的方式发生，通过事件回调的方式通知，事件回调通过先进先出的方式添加到任务队列，任务队列中的回调事件在js引擎空闲时依次执行；
+  > 	
+
+   这些回调包括：setTimeOut setInterval,click,ajax等；
+   //浏览器中，js引擎线程会循环从任务队列中读取事件并执行，这种机制成为event Loop(事件循环)；
+   对于一个ajax请求，首先生成一个xmlhttpRequest对象，open过后，调用send方法，这时产生了http请求，请求被异步发送出去，js引擎不会等待回应而继续执行其他动作；当response后，浏览器监捕获到了ajax的回调事件onreadystatechange，然后将此事件添加到任务队列的末尾；直到js引擎空闲了再执行；
+  	 在onreadystatechange内部可能会执行dom事件，执行GUI渲染线程，对UI进行重绘或回流，当JS引擎重新执行时，GUI线程会暂时挂起，等引擎空闲时执行；
+   //ajax和setTimeOut排队问题：
+  	ajax和setTimeOut的回调事件会按照顺序自动添加到任务列队，依次执行，然而，ajax并非所有事件都是异步，
+  	readyState==1的onreadystatechange回调和onloadstart回调是同步执行的
+   //XMLHttpRequest对象属性解读：
+   1.在谷歌浏览器console中创建一个XMLHttpRequest对象并输出他
+   //继承：inherit
+  	XMLHttpRequest 实例对象没有自有属性. 实际上, 它的所有属性均来自于 XMLHttpRequest.prototype .
+  	追根溯源, XMLHttpRequest 实例对象具有如下的继承关系. (下面以a<<b表示a继承b)
+  	xhr << XMLHttpRequest.prototype << XMLHttpRequestEventTarget.prototype << EventTarget.prototype << Object.prototype
+  	由上, xhr也具有Object等原型中的所有方法. 如toString方法.
+  //readyState只读属性：
+  	 readyState属性记录了ajax调用过程中所有可能的状态. 它的取值简单明了, 如下:
+  			readyState 	对应常量 	                  描述
+  		0 (未初始化) 	xhr.UNSENT 	            请求已建立, 但未初始化(此时未调用open方法)
+  		1 (初始化) 	    xhr.OPENED 	            请求已建立, 但未发送 (已调用open方法, 但未调用send方法)
+  		2 (发送数据) 	xhr.HEADERS_RECEIVED 	请求已发送 (send方法已调用, 已收到响应头)
+  		3 (数据传送中) 	xhr.LOADING 	        请求处理中, 因响应内容不全, 这时通过responseBody和responseText获取可能会出现错误
+  		4 (完成) 	    xhr.DONE 	            数据接收完毕, 此时可以通过通过responseBody和responseText获取完整的响应数据
 
 		注意, readyState 是一个只读属性, 想要改变它的值是不可行的.
 //onreadystatechange：
@@ -279,9 +289,9 @@ jquery可以使用$.when方法.
 	Transfer-Encoding: chunked
 
 	以上, http状态码为200, 表示允许OPTIONS请求.
-
+	
 	GET, POST 请求与GET类似, 其他请求亦然.
-
+	
 	curl -I -X GET -H "Origin: http://example.com" http://localhost:10108/
 	#HTTP/1.1 200 OK
 	curl -I -X POST -H "Origin: http://example.com" http://localhost:10108/test
@@ -292,8 +302,42 @@ jquery可以使用$.when方法.
 除此之外, 我们还可以通过chrome的postman扩展进行测试. 请看postman素洁的界面:
 postman支持所有类型的http请求, 由于其向chrome申请了cookie访问权限及所有http(s)网站的访问权限. 因此可以放心使用它进行各种网站api的测试.
 			 
-		
-	 
+		jsonp和Ajax的区别：
+jQuery中封装的jsonp使用方法：
+	 <title>Untitled Page</title>
+	  <script type="text/javascript" src=jquery.min.js"></script>
+	  <script type="text/javascript">
+	 jQuery(document).ready(function(){ 
+		$.ajax({
+			 type: "get",
+			 async: false,
+			 url: "http://flightQuery.com/jsonp/flightResult.aspx?code=CA1998",
+			 dataType: "jsonp",
+			 jsonp: "callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
+			 jsonpCallback:"flightHandler",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
+			 success: function(json){
+				 alert('您查询到航班信息：票价： ' + json.price + ' 元，余票： ' + json.tickets + ' 张。');
+			 },
+			 error: function(){
+				 alert('fail');
+			 }
+		 });
+	 });
+	 </script>
+​	 </head>
+
+	<body>
+	</body>
+	</html>
+
+是不是有点奇怪？为什么我这次没有写flightHandler这个函数呢？而且竟然也运行成功了！哈哈，这就是jQuery的功劳了，jquery在处理jsonp类型的ajax时（还是忍不住吐槽，虽然jquery也把jsonp归入了ajax，但其实它们真的不是一回事儿），自动帮你生成回调函数并把数据取出来供success属性方法来调用，是不是很爽呀？
+
+这里针对ajax与jsonp的异同再做一些补充说明：
+1、ajax和jsonp这两种技术在调用方式上“看起来”很像，目的也一样，都是请求一个url，然后把服务器返回的数据进行处理，因此jquery和ext等框架都把jsonp作为ajax的一种形式进行了封装；
+2、但ajax和jsonp其实本质上是不同的东西。ajax的核心是通过XmlHttpRequest获取非本页内容，而jsonp的核心则是动态添加<script>标签来调用服务器提供的js脚本。
+3、所以说，其实ajax与jsonp的区别不在于是否跨域，ajax通过服务端代理一样可以实现跨域，jsonp本身也不排斥同域的数据的获取。
+4、还有就是，jsonp是一种方式或者说非强制性协议，如同ajax一样，它也不一定非要用json格式来传递数据，如果你愿意，字符串都行，只不过这样不利于用jsonp提供公开服务。
+总而言之，jsonp不是ajax的一个特例，哪怕jquery等巨头把jsonp封装进了ajax，也不能改变着一点！	 
 	 
 	 
 	 
