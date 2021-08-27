@@ -1,14 +1,15 @@
-//JS模块化:
-	模块化的特征：
-		1.模块化，能重用；
-		2.封装了function和变量，与全局namespace不接触，松耦合；
-		3.只暴露可用public方法，其他私有方法全部隐藏；
-	*可以把模块写成一个对象，将所有模块成员都放到这个对象里面，外部可通过变量名访问，但是会暴露所有模块成员，内部状态可以被外部改写；
+### JS模块化:
+
+​	模块化的特征：
+​		1.模块化，能重用；
+​		2.封装了function和变量，与全局namespace不接触，松耦合；
+​		3.只暴露可用public方法，其他私有方法全部隐藏；
+​	*可以把模块写成一个对象，将所有模块成员都放到这个对象里面，外部可通过变量名访问，但是会暴露所有模块成员，内部状态可以被外部改写；
+​						
+
 		var model={
-			_count:0,
-			m1=function(){
-				
-			},
+				_count:0,
+				m1=function(){	},
 			m2=function(){
 				
 			}
@@ -91,11 +92,11 @@
 	//紧耦合扩展：
 			var blogModule = (function (my) {
 			var oldAddPhotoMethod = my.AddPhoto;
-
+	
 			my.AddPhoto = function () {
 				// 重载方法，依然可通过oldAddPhotoMethod调用旧的方法
 			};
-
+	
 			return my;
 		} (blogModule));
 		限制了加载的顺序，但是提供了重载的能力；
@@ -104,7 +105,7 @@
 		那如果我们非要使用，那怎么办呢？ 我们先看一段代码：
 		var blogModule = (function (my) {
 			var _private = my._private = my._private || {},
-
+	
 				_seal = my._seal = my._seal || function () {
 					delete my._private;
 					delete my._seal;
@@ -120,22 +121,23 @@
 		任何文件都可以对他们的局部变量_private设属性，并且设置对其他的文件也立即生效。
 		一旦这个模块加载结束，应用会调用 blogModule._seal()"上锁"，这会阻止外部接入内部的_private。如果这个模块需要再次增生，
 		应用的生命周期内，任何文件都可以调用_unseal() ”开锁”，然后再加载新文件。加载后再次调用_seal()”上锁”。
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			
+
+
+​				
+​				
+​				
+​				
+​				
+​				
+​				
+​				
+​				
+​				
+​				
+​				
+​				
+​				
+​				
+​				
+​				
+​			
