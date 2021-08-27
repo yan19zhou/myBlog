@@ -372,6 +372,59 @@ const p = new Builder()
 结构型设计模式
 总结了一些类或对象组合在一起的经典结构，这些经典结构可以解决特定应用场景的问题，将类或对象的结构和使用解耦
 
+###### 每个函数都有一个prototype属性
+
+```javascript
+function Person(){}    
+person.prototype = {
+    contructor:Person,
+    name:"lusi",
+    age:15
+}
+```
+
+> 组合模式
+
+###### 使用构造函数模式和原型模式，构造函数中定义实例属性，则每个实例中的属互不干扰，原型中定义共享的属性和方法
+
+```javascript
+function Person(name,age){
+    this.name = name;
+    this.age = age 
+}
+Person.protoType = {
+    constructor : Person,
+    getName: function(){
+        return this.name
+    }
+}
+var P1 = new Person('lili',14)
+var P2 = new Person('like',16)
+P1.getName()  // lili
+```
+
+> 动态原型模式
+
+###### 把所有信息都封装在构造函数之中，通过判断来决定是否在构造函数中初始化原型
+
+```javascript
+function Person(name, age){
+    this.name = name;
+    this.age = age;
+
+    // 方法
+    if(typeof this.sayName != 'function'){
+        Person.prototype.sayname = function(){
+            console.log(this.name)
+        }
+    }
+}
+var friend = new Person('lici',29)
+    friend.sayName()
+```
+
+
+
 #### 桥接模式
 
 应用场景

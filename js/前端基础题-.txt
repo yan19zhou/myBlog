@@ -1,63 +1,3 @@
-2018-09-17
-
-#### 0.谈谈对前端安全的理解，有什么，怎么防范
-
-前端安全问题主要有XSS、CSRF攻击
-
-- XSS：跨站脚本攻击
-  它允许用户将恶意代码植入到提供给其他用户使用的页面中，可以简单的理解为一种javascript代码注入。
-
-- XSS的防御措施：
-  - 过滤转义输入输出
-  - 避免使用eval、new Function等执行字符串的方法，除非确定字符串和用户输入无关
-  - 使用cookie的httpOnly属性，加上了这个属性的cookie字段，js是无法进行读写的
-  - 使用innerHTML、document.write的时候，如果数据是用户输入的，那么需要对象关键字符进行过滤与转义
-
-- CSRF：跨站请求伪造
-  其实就是网站中的一些提交行为，被黑客利用，在你访问黑客的网站的时候进行操作，会被操作到其他网站上
-- CSRF防御措施：
-  - 检测http referer是否是同域名
-  - 避免登录的session长时间存储在客户端中
-  - 关键请求使用验证码或者token机制
-
-- 其他的一些攻击方法还有HTTP劫持、界面操作劫持
-
-#### 1.使用箭头函数需要注意的地方
-
-​	当要求动态上下文的时候，你就不能使用箭头函数，比如：定义方法，用构造器创建对象，处理时间时用 this 获取目标。
-
-#### 2.webpack.load的原理
-
-​	loaders是你用在app源码上的转换元件。他们是用node.js运行的，把源文件作为参数，返回新的资源的函数。
-
-#### 3.ES6 let、const
-
-let
-	let是更完美的var
-
-    let声明的变量拥有块级作用域,let声明仍然保留了提升的特性，但不会盲目提升。
-    let声明的全局变量不是全局对象的属性。不可以通过window.变量名的方式访问
-    形如for (let x…)的循环在每次迭代时都为x创建新的绑定
-    let声明的变量直到控制流到达该变量被定义的代码行时才会被装载，所以在到达之前使用该变量会触发错误。
-
-const
-	定义常量值，不可以重新赋值，但是如果值是一个对象，可以改变对象里的属性值
-
-	const OBJ = {"a":1, "b":2};
-		  OBJ.a = 3;
-		  OBJ = {};// 重新赋值，报错！
-		  console.log(OBJ.a); // 3
-
-#### 4.CSS3 box-sizing的作用
-
-	设置CSS盒模型为标准模型或IE模型。标准模型的宽度只包括content，二IE模型包括border和padding
-	
-	box-sizing属性可以为三个值之一：
-	
-	content-box，默认值，border和padding不计算入width之内
-	padding-box，padding计算入width内
-	border-box，border和padding计算入width之内
-
 #### 5.说说HTML5中有趣的标签（新标签及语义化）
 
 	如果代码写的语义化，有利于SEO。搜索引擎就会很容易的读懂该网页要表达的意思。例如文本模块要有大标题，合理利用h1-h6，列表形式的代码使用ul或ol，重要的文字使用strong等等。总之就是要充分利用各种HTML标签完成他们本职的工作
@@ -316,6 +256,31 @@ ev.addEventListener('自定义事件名', function(){
 ev.dispatchEvent(eve);
 
 CustomEvent，还可以指定参数
+
+```
+	鼠标事件
+		click: 鼠标单击时触发；
+		dblclick：鼠标双击时触发；
+		mouseenter：鼠标进入时触发；
+		mouseleave：鼠标移出时触发；
+		mousemove：鼠标在DOM内部移动时触发；
+		hover：鼠标进入和退出时触发两个函数，相当于mouseenter加上mouseleave。
+	
+	键盘事件
+	键盘事件仅作用在当前焦点的DOM上，通常是<input>和<textarea>。
+		keydown：键盘按下时触发；
+		keyup：键盘松开时触发；
+		keypress：按一次键后触发。
+	
+	其他事件
+		focus：当DOM获得焦点时触发；
+		blur：当DOM失去焦点时触发；
+		change：当<input>、<select>或<textarea>的内容改变时触发；
+		submit：当<form>提交时触发；
+		ready：当页面被载入并且DOM树完成初始化后触发:$(function(){...})
+```
+
+
 
 #### 19.本地起了一个http server，为什么只能在同一个WIFI(局域网)上访问？
 

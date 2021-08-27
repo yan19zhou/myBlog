@@ -21,7 +21,7 @@
     BFC全称”Block Formatting Context”, 中文为“块级格式化上下文”。流体特性：块状水平元素，如div元素（下同），在默认情况下（非浮动、绝对定位等），水平方向会自动填满外部的容器；BFC元素特性表现原则就是，内部子元素不会影响外部的元素。
 
 5.HTTP状态码：
-  
+
      1.消息  2.成功 3.重定向 4.请求错误 5.服务器错误
      304：响应禁止包含消息体，如果客户端发送了一个带条件的 GET 请求且该请求已被允许，而文档的内容（自上次访问以来或者根据请求的条件）并没有改变，则服务器应当返回这个状态码。
      305：被请求的资源必须通过指定的代理才能被访问。
@@ -68,7 +68,7 @@ console.log(qq.name);
 ```
 
 我们发现apply()和call()的真正用武之地是能够扩充函数赖以运行的作用域，可以改变函数体内部 this 的指向：
-  
+
 
 ```
       window.firstName = "diz";
@@ -246,7 +246,7 @@ propagation        【传播，蔓延】
 	3. Factory Method（工厂方法）：定义一个用于创建对象的接口，让子类决定实例化哪一个类。就行构造函数
 	4. Abstract Factory（抽象工厂）：。。。
 	5. Prototype（原型）：当要实例化的类是在运行时刻指定时，例如，通过动态装载。
-    ......
+	......
 
 23.CSS框架：
 
@@ -276,7 +276,7 @@ ExtJS
 
     父级div定义 height,父级div手动定义height，就解决了父级div无法自动获取到高度的问题。
     结尾处加空div标签 clear:both
-	父级div定义 overflow:hidden /auto
+    父级div定义 overflow:hidden /auto
 
 27.前端性能优化
 
@@ -353,20 +353,20 @@ Var zy={“name”:”zygg”,
 34.构造函数
 
 	js创建对象的方式包括两种：对象字面量和使用new表达式。对应代码：
-
+	
 	```
 	Var zy={
 	  “name”:”zygg”,
 	  “age”:22
 	}
-
+	
 	function zy(name,age){
-
+	
 			this.name=name;
 			this.age=age;
 		}
 		zy.prototype.sex="male";
-
+	
 		var zygg=new zy("bailu",18)
 		console.log(zygg.name)  //bailu		
 	```
@@ -458,13 +458,13 @@ function zy(callback){
 当然了css3规定了，一系列的有关box的属性，比如 box-shadow。。。。。
 
 40.JavaScript内置对象有以下几种。 
-   
+
      String对象：处理所有的字符串操作 
      Math对象：处理所有的数学运算 
      Date对象：处理日期和时间的存储、转化和表达 
      Array对象：提供一个数组的模型、存储大量有序的数据 
      Event对象：提供JavaScript事件的各种处理信息 
-     
+
 41.JavaScript内置函数
 
 ①：escape( )escape() 函数可对字符串进行编码，这样就可以在所有的计算机上读取该字符串。 eg:?=%3
@@ -499,21 +499,21 @@ eg:eval("x=10;y=20;document.write(x*y)")
 
 46.jQuery 选择器种类
 
-                   
+​                   
 
 47.Unicode和ASCII的区别是什么回答
 
    计算机发明后，为了在计算机中表示字符，人们制定了一种编码，叫ASCII码。
 中国人利用连续2个扩展ASCII码的扩展区域（0xA0以后）来表示一个汉字，该方法的标准叫GB-2312。因为各个国家地区定义的字符集有交集，因此使用GB-2312的软件，就不能在BIG-5的环境下运行（显示乱码），反之亦然。
     为了把全世界人民所有的所有的文字符号都统一进行编码，于是制定了UNICODE标准字符集。UNICODE 使用2个字节表示一个字符(unsigned shor int、WCHAR、_wchar_t、OLECHAR)。
-   
+
 48.JS的数据类型：字符串、数字、布尔、数组、对象、Null、Undefined
 
    Null和undefined的区别：
 undefined表示变量声明但未初始化时的值，javascript解释器不知道这是什麽东西,会抛出"未定义"的错误
 null表示准备用来保存对象，还没有真正保存对象的值。从逻辑角度看，null值表示一个空对象指针，意思是你定义了它,但它没有分配内存空间。
 
-                  
+​                  
 
 二.CSS(3)
 
@@ -522,12 +522,12 @@ css3总的说来大概就是边框的一些特殊样式，比如圆角，还有�
 在CSS3中border-radius属性被用于创建圆角（前提是有边框属性）：border-radius:10px;
 
      如果你在 border-radius 属性中只指定一个值，那么将生成 4 个 圆角。
-  
+      
      其也可以这样写：border-radius:1px 2px 3px 4px [可以给四个角同时设置]
      也可以border-top/bottom-left/right-radius，给某个角给值。
-
+    
       其值也可以这样：  border-radius: 15px/50px;
-
+    
                         border-radius: 50% ;【椭圆效果】
 CSS3中的box-shadow属性被用来添加阴影:box-shadow : 3px 3px 3px yellow;[上右下左]
 有了CSS3的border-image属性，你可以使用图像创建一个边框：
@@ -539,7 +539,7 @@ round : 图像平铺（重复）来填充该区域。
 Stretch 这里，图像被拉伸以填充该区域。
 
 background-size指定背景图像的大小。CSS3以前，背景图像大小由图像的实际大小决定。
-  
+
      background-size:80px 60px;
 background-Origin属性指定了背景图像的位置区域。
 content-box, padding-box,和 border-box区域内可以放置背景图像。

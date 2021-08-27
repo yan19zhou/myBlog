@@ -1,7 +1,4 @@
-2018-09-14
-Web 前端知识体系精简
-
-JAVASCRIPT 篇
+### JAVASCRIPT 篇
 
 #### 0、基础语法
 
@@ -35,15 +32,39 @@ JAVASCRIPT 篇
 
 #### 4、构造函数 new
 
-	JS中的函数即可以是构造函数又可以当作普通函数来调用，当使用new来创建对象时，对应的函数就是构造函数，通过对象来调用时就是普通函数。
-	
-	普通函数的创建有：显式声明、匿名定义、new Function() 等三种方式。
-	
-	当通过new来创建一个新对象时，JS底层将新对象的原型链指向了构造函数的原型对象，于是就在新对象和函数对象之间建立了一条原型链，通过新对象可以访问到函数对象原型prototype中的方法和属性。new的详细介绍请参考博客：理解JS中的new运算符
+> JS中的函数即可以是构造函数又可以当作普通函数来调用，当使用new来创建对象时，对应的函数就是构造函数，通过对象来调用时就是普通函数。
+
+> 普通函数的创建有：显式声明、匿名定义、new Function() 等三种方式。
+
+> 当通过new来创建一个新对象时，JS底层将新对象的原型链指向了构造函数的原型对象，于是就在新对象和函数对象之间建立了一条原型链，通过新对象可以访问到函数对象原型prototype中的方法和属性。
+
+###### 构造函数可以用来创建对象，它没有返回值，只是通过函数来处理事情
+
+###### 通过构造函数创建的对象都有一个constructor属性，指向Person
+
+    function Person(name,age){
+        this.name = name;
+        this.age = age;
+        this.getName = function(){
+            console.log(this.name)
+            
+        }
+    }
+    var p1 = new Person("liming",22)
+
+
 
 #### 5、闭包
 
-	闭包其实是一个主动执行的代码块，这个代码块的特殊之处是可以永久保存局部变量，但又不污染全局变量，可以形成一个独立的执行过程，因此我们经常用闭包来定义组件。关于闭包的介绍请参考：干货分享：让你分分钟学会JS闭包
+    概念：有权访问另一个函数作用域中的变量的函数,目的：变量私有化
+
+1. 父函数包含子函数
+2. 返回一个匿名函数
+3. 函数的执行环境销毁之后，变量对象依然保存在内存之中
+
+> 闭包中的this
+
+    概念：一般来讲谁调用this指向谁，内部函数在搜索变量时，只会搜索到其活动对象为止，把外部作用域的this对象保存在一个闭包能够访问的变量里，就可以让闭包访问该对象了
 
 #### 6、单线程和异步队列
 
@@ -67,7 +88,22 @@ JAVASCRIPT 篇
 
 	document对象里保存着整个web页面dom结构，在页面上所有的元素最终都会映射为一个dom对象。 document也提供了很多api来查找特定的dom对象，比如getElementById,querySelector等等。
 
-#### 9、事件系统 Event
+#### 9、javaScript中的nodeName,nodeVaule,nodeType的区别
+
+- nodeName 表示节点的名称
+  - 元素节点的nodeName是标签名称
+  - 属性节点的nodeName是属性名称
+  - 文本节点的nodeName是#text
+  - 文档节点的nodeName是#document
+- nodeVaule 表示文本内容
+  - 对于文本节点，nodeVaule属性包含文本
+  - 对于属性节点，nodeValue属性包含属性值
+- nodeType 属性返回节点的类型,常用的如下
+  - 元素类型对应的节点类型为1
+  - 属性类型对应的节点类型为2
+  - 文本属性对应的节点类型为3
+
+#### 10、事件系统 Event
 
 	事件是用户与页面交互的基础，到目前为止，DOM事件从PC端的 鼠标事件(mouse) 发展到移动端的 触摸事件(touch) 和 手势事件(guesture)
 	
@@ -75,54 +111,226 @@ JAVASCRIPT 篇
 	
 	除此之外，在页面初始化、滚动、隐藏、返回等操作时分别内置了onload/onDOMContentLoaded、onscroll、onvisibility和onhashchange等事件，如果想要捕获这些事件，需要通过addEventLisener/attachEvent来进行绑定。
 
-#### 10、全局对象 window
+#### 11、全局对象 window
 
 	在JS中，当一段JS代码在浏览器中被加载执行，JS引擎会在内存中构建一个全局执行环境，执行环境的作用是保证所有的函数能按照正确的顺序被执行，而window对象则是这个执行环境中的一个全局对象，window对象中内置了很多操作api和对象，document对象就是其中一个。关于JS执行环境的介绍请参考博客：深入理解JS执行细节
-	
 
-#### CSS 篇
+#### 12、js中基本数据类型有哪些？本地对象，内置对象，宿主对象有那些？
+
+
+
+- 基本数据类型： string,boolean,number,null,undefined,object。
+
+- 本地对象(常用)： Object,Function,String,Number,Boolean,Data,Array,RegExp。
+
+- 内置对象： 简单的说，内置对象是本地对象的一种，其中包含2种对象，Math,Global(isNaN,parseInt,parseFloat)
+
+- 宿主对象： 所有BOM,DOM都是宿主对象,其中BOM常用对象有：
+  - localtion
+  - navigation
+  - screen
+  - history
+
+#### 12.字符串方法
+
+```javascript
+1.str.charAt(index) // index位置取一个字符
+// 查找字符串位置
+2.str.indexOf(searchString,startIndex) // 从startIndex位置开始查找
+3.str.lastIndexOf(searchString,startIndex) //从右往左找子字符串，找不到时返回-1
+4.str.search(),//返回匹配的第一个位置。
+5.str.match()，//返回一个数组，成员为匹配的字符串。
+6.str.length(),//返回字符串的长度
+    
+//截取字符串,截取start到end-1的字符串
+7.str.substring(start,end) 
+8.str.slice(start,end)//从原字符串中取回字符串并返回,第一个参数为起始位置，第二个参数为结束位置。
+9.str.substr(),//从原字符串中取回字符串并返回，第一个参数是子字符串的开始位置，第二个参数是子字符串的长度。
+10.str.concat(),//方法用于连接两个字符串，返回一个新字符串，不改变原字符串。
+11.str.charAt()//方法返回指定位置的字符，参数是从0开始编号的位置。
+12.str.trim()
+// 分割字符串
+13.str.split(separator,limit) //第一个参数为起始位置 第二个参数为限定放回数组的成员数，注意，第一个参数如果为空，则返回数组的成员是原字符串的每一个字符。此方法会将字符串装换为数组。
+// 返回替换后的字符串
+14.str.replace(rgEXP/substr,replaceText) //第一个参数为被替换的内容，第二个参数为要替换的内容，一般只匹配一个。
+
+//有一个字符串 abcd-ef-ghi,请用js把它处理成ghi&ed&abcd。
+//字符串和数组之间的装换。
+
+	var a ="abcd-ef-ghi";
+	var b = a.spilt("-");
+	var result = b.reverse().join("&")
+	
+// 请编写代码拓展JavaScript中string对象，让其有一个方法删除字符串中所有英文句号"."
+
+	String.prototype.killPoint = function(){  
+		return this.replace(/\./g,"");
+	 }
+// 将字符串"wang zhi j un"中由空格分割的每个单词首字母大小写。
+
+	function str(words) {
+	  words = words.split(" ");
+	  
+	for(var i = 0;i<words.length;i++){
+		words[i] = words[i].charAt(0).toUpperCase + words[i].slice(1);
+	  }
+	  
+	return words;
+	 }
+	var words = "wang zhi j un";
+	str(words);
+```
+
+#### 13、websocket)
+
+websocket属于H5新增的，websocket是基于http的,和http没有基本关系(或者说交集不大)，http只负责websokect的连接
+http不是持久性的协议，websocket是持久性的协议，在http中一个request对应一个response,也就说明了 http的缺点 http是被动的，服务器端不能主动发起请求
+ajax的轮询，每隔几秒发起一个请求给服务端，这样比较消耗内存,需要更快的响应速度
+polling 则是采用阻塞模型(打电话，如果没信息值一直不挂)，则是需要更多的电话，ajax的轮询和 polling 的作用是实时推送
+websokect解决的问题是，让服务端有主动性，只需要消耗一次的HTTP请求
+
+### CSS 篇
 
 css是用来对html进行修饰的一门语言。
 
-##### 1、选择器
+#### 1、选择器
 
-	css的选择器有很多种，常用的有类选择器、标签选择器、ID选择器、后代选择器、群组选择器、伪类选择器(before/after)、兄弟选择器(+~)、属性选择器等等。
+```css
+css的选择器有很多种，常用的有类选择器、标签选择器、ID选择器、后代选择器、群组选择器、伪类选择器(before/after)、兄弟选择器(+~)、属性选择器等等。
 
-##### 2、定位
+css3选择器类(稍微特别一点的)
+
+	first-child
+	last-child
+	nth-child
+	:cheecked
+```
+
+#### 2、定位
 
 	定位一般有相对定位(relative)、绝对定位(absolute)、固定定位(fixed)，relative和absolute在移动端用的最多，fixed 在移动端有兼容性问题，因此不推荐使用，在移动端替代fixed的方案是 absolute+内部滚动。
 
-##### 3、浮动
+#### 3、浮动
 
 	设置float为left或right，就能使该元素脱离文档流，向左或向右浮动。一般在做宫格模式布局时会用到，如果子元素全部设置为浮动，则父元素是塌陷的，这时就需要清除浮动，清除浮动的方法也很多，常用的方法是在元素末尾加空元素设置clear:both, 更高级一点的就给父容器设置before/after来模拟一个空元素，还可以直接设置overflow:auto/hidden。除过浮动可以实现宫格模式，行内盒子(inline-block)和table也可以。
 
-##### 4、盒子模型
+#### 4、盒子模型
 
-	盒子模型是css最重要的一个概念，也是css布局的基石。 常见的盒子模型有块级盒子(block)和行内盒子(inline-block)，盒子最关键的几个属性包括margin、border、padding和content,这几个元素可以设置盒子和盒子之间的关系以及盒子和内容之间的关系。还有一个问题是计算盒子的大小，需要注意的是，box-sizing属性的设置会影响盒子的width和height。只有普通文档流中块框的垂直外边距才会发生外边距合并。行内框、浮动框或绝对定位之间的外边距不会合并。
+```css
+盒子模型是css最重要的一个概念，也是css布局的基石。
 
-##### 5、Flex布局
+常见的盒子模型有块级盒子(block)和行内盒子(inline-block)，盒子最关键的几个属性包括margin、border、padding和content,这几个元素可以设置盒子和盒子之间的关系以及盒子和内容之间的关系。还有一个问题是计算盒子的大小，
+
+需要注意的是，box-sizing属性的设置会影响盒子的width和height。只有普通文档流中块框的垂直外边距才会发生外边距合并。行内框、浮动框或绝对定位之间的外边距不会合并。
+
+设置CSS盒模型为标准模型或IE模型。标准模型的宽度只包括content，二IE模型包括border和padding
+
+box-sizing属性可以为三个值之一：
+
+content-box，默认值，border和padding不计算入width之内
+padding-box，padding计算入width内
+border-box，border和padding计算入width之内
+```
+
+
+
+#### 5、Flex布局
 
 	Flex布局的容器是一个伸缩容器，首先容器本身会更具容器中的元素动态设置自身大小；然后当Flex容器被应用一个大小时（width和height），将会自动调整容器中的元素适应新大小。Flex容器也可以设置伸缩比例和固定宽度，还可以设置容器中元素的排列方向（横向和纵向）和是否支持元素的自动换行。有了这个神器，做页面布局的可以方便很多了。注意，设为Flex布局以后，子元素的float、clear和vertical-align属性将失效。
 
-##### 6、transition(过渡) 和 transform(旋转)
+#### 6、transition(过渡) 和 transform(旋转)
 
 	应用transform可以对元素进行平移(translate)、旋转(rotate)、放大缩小(scale)、倾斜(skew)等处理，而transition使css属性值(包括transform)在一段时间内平滑的过渡。使用transition和transform就可以实现页面的滑动切换效果。
 
-##### 7、动画 Animation
+> transition的局限性
+
+		transition 需要事件触发
+		transition 是一次性的，不能重复，除非一在触发
+		transition 只有开始和结束2种状态，不能定义中间状态
+		transition 只能定义一个属性的变化，不能涉及多个属性。
+		transition 不能识别display的变化。
+
+#### 7、动画 Animation
 
 	Animation首先需要设置一个动画函数，然后以这个动画的方式来改变元素的css属性之的变化，动画可以被设置为永久循环演示。 和transition相比，animation设置动画效果更灵活更丰富，二者还有一个区别是：transition只能通过主动改变元素的css值才能触发动画效果，而animation一旦被应用，就开始执行动画。
 
-##### 8、Sprite图
+#### 8、Sprite图
 
 	对于大型站点，为了减少http请求的次数，一般会将常用的小图标排到一个大图中，页面加载时只需请求一次网络， 然后在css中通过设置background-position来控制显示所需要的小图标。
 
-##### 9、字体图标 iconfont
+#### 9、字体图标 iconfont
 
 	所谓字体图标就是将常用的图标转化为字体资源存在文件中，通过在CSS中引用该字体文件，然后可以直接通过控制字体的css属性来设置图标的样式。
 
-#### HTML 篇
+#### 10、ccs3的新特性
 
-##### 1、Web语义化 和 SEO
+> 渐变
+
+```css
+线性渐变：(默认是从上到下)，第一个参数为方位，可以是对角,如left to。也可以是角度，注意这里是顺时钟，如180deg就是从下到上
+linear-gradient(left,#333,#999) 
+                      
+径向渐变：`radial-gradient(center,circle,yellow 10%,bule 30%)
+
+阴影 box-shadow
+反射 box-reflect
+背景 background-clip
+
+	
+```
+
+#### 11、IOS系统下被触摸的时候有半透明遮罩
+
+```css
+a,button,input,textarea{-webkit-tap-heightlight-color:rgb(0,0,0,0);}
+```
+
+#### 12、webkit表单元素的默认外观怎么重置
+
+```css
+.css{-webkit-appearance:none;}
+```
+
+#### 13、打电话，发邮件
+
+```html
+<a href="tel:020-62682400">打电话给020-62682400</a>
+<a href="email:13249791010@163.com">13249791010@163.com</a>
+```
+
+#### 14、移动端模拟hover效果，添加ontouchstart,ontouchend事件
+
+```js
+var btnBlue = document.querySelector(".btn-blue");
+	btnBlue.ontouchstart = function(){		  
+	this.className = "btn-blue btn-blue-on"
+}
+	btnBlue.ontouchend = function(){
+	this.className = "btn-blue"
+}
+```
+
+#### 15、ios下禁止调整字体大小
+
+```css
+body{-webkit-text-size-adjust:100%}
+```
+
+#### 16、ios下输入框取消大写
+
+```html
+<input autocapitalize="off" autocorrect="off">
+```
+
+#### 17、css3动画
+
+> 尽可能地使用合成属性transform和opacity来设计CSS3动画，不使用position的left和top来定位,用translate3D开启加速
+
+
+
+### HTML 篇
+
+#### 1、Web语义化 和 SEO
 
 	html 常规标签有html,head,body,div,span,table,ul,ol,dl,p,b,h1~h6,strong,form,input,img,em,i 等等，另外html5 还新增了很多语义化的标签，比如header,acticle,aside,section,footer,audio,radio 等等。
 	
@@ -132,7 +340,7 @@ css是用来对html进行修饰的一门语言。
 	
 	搜索引擎通过爬虫技术获取的页面就是由一堆html标签组成的代码,，人可以通过可视化的方式来判断页面上哪些内容是重点，而机器做不到。 但搜索引擎会根据标签的含义来判断内容的权重，因此，在合适的位置使用恰当的标签，使整个页面的语义明确，结构清晰，搜索引擎才能正确识别页面中的重要内容，并予以较高的权值。比如h1~h6这几个标签在SEO中的权值非常高，用它们作页面的标题就是一个简单的SEO优化。
 
-##### 2、页面渲染机制
+#### 2、页面渲染机制
 
 	页面渲染就是浏览器的渲染引擎将html代码根据CSS定义的规则显示在浏览器窗口中的过程。大致工作原理如下：
 	
@@ -147,7 +355,7 @@ css是用来对html进行修饰的一门语言。
 	如果此时js脚本中运行了style.display=”none”, 布局被改变，引擎也需要重新渲染这部分代码；
 	直到为止，页面渲染完毕。
 
-##### 3、重绘和回流
+#### 3、重绘和回流
 
 	当渲染树中的一部分(或全部)因为元素的规模尺寸，布局，隐藏等改变而需要重新构建。这就称为回流。比如上面的img文件加载完成后就会引起回流，每个页面至少需要一次回流，就是在页面第一次加载的时候。
 	
@@ -162,7 +370,7 @@ css是用来对html进行修饰的一门语言。
 	移动元素，比如改变top,left,transform的值，或者移动元素到另外一个父元素中。(重绘+回流)
 	对style的操作(对不同的属性操作，影响不一样)
 	还有一种是用户的操作，比如改变浏览器大小，改变浏览器的字体大小等(回流+重绘)
-##### 4、本地存储
+#### 4、本地存储
 
 	本地存储最原始的方式就是 cookie,cookie 是存放在本地浏览器的一段文本，数据以键值对的形式保存，可以设置过期时间。 但是 cookie 不适合大量数据的存储，因为每请求一次页面，cookie 都会发送给服务器，这使得 cookie 速度很慢而且效率也不高。因此cookie的大小被限制为4k左右(不同浏览器可能不同,分HOST)，如下所示：
 	
@@ -177,7 +385,7 @@ css是用来对html进行修饰的一门语言。
 	
 	此外，H5还提供了逆天的websql和indexedDB,允许前端以关系型数据库的方式来存储本地数据，相对来说，这个功能目前应用的场景比较少，此处不作介绍。
 
-##### 5、浏览器缓存机制
+#### 5、浏览器缓存机制
 
 	浏览器缓存机制是指通过 HTTP 协议头里的 Cache-Control（或 Expires）和 Last-Modified（或 Etag）等字段来控制文件缓存的机制。
 	
@@ -197,7 +405,7 @@ css是用来对html进行修饰的一门语言。
 	
 	手动刷新页面（F5)，浏览器会直接认为缓存已经过期（可能缓存还没有过期），在请求中加上字段：Cache-Control:max-age=0，发包向服务器查询是否有文件是否有更新。
 	强制刷新页面（Ctrl+F5)，浏览器会直接忽略本地的缓存（有缓存也会认为本地没有缓存），在请求中加上字段：Cache-Control:no-cache（或 Pragma:no-cache），发包向服务重新拉取文件。
-##### 6、History路由机制
+#### 6、History路由机制
 
 	用户访问网页的历史记录通常会被保存在一个类似于栈对象中，即history对象，点击返回就出栈，跳下一页就入栈。 它提供了一些方法来操作页面的前进和后退：
 	
@@ -211,7 +419,7 @@ css是用来对html进行修饰的一门语言。
 	当点击浏览器后退按钮或js调用history.back都会触发onpopstate事件, 与其类似的还有一个事件: onhashchange 。
 	onhashchange是老API, 浏览器支持度高, 本来是用来监听hash变化的, 但可以被利用来做客户端前进和后退事件的监听，onpopstate是专门用来监听浏览器前进后退的, 不仅可以支持hash, 非hash的同源url也支持。
 
-##### 7、HTML5离线缓存
+#### 7、HTML5离线缓存
 
 	HTML5离线缓存又叫Application Cache，是从浏览器的缓存中分出来的一块缓存区，如果要在这个缓存中保存数据，可以使用一个描述文件（manifest file），列出要下载和缓存的资源。
 	
@@ -228,7 +436,7 @@ css是用来对html进行修饰的一门语言。
 	离线浏览 – 用户可在应用离线时使用它们
 	速度 – 已缓存资源加载得更快
 	减少服务器负载 – 浏览器将只从服务器下载更新过或更改过的资源。
-##### 8、Canvas和SVG
+#### 8、Canvas和SVG
 
 	Canvas 通过Javascript 来绘制 2D 图形。Canvas 是逐像素进行渲染的。在 Canvas 中，一旦图形被绘制完成，它就不会继续得到浏览器的关注。如果其位置发生变化，那么整个场景也需要重新绘制，包括任何或许已被图形覆盖的对象。
 	
@@ -236,3 +444,53 @@ css是用来对html进行修饰的一门语言。
 	
 	Canvas和SVG相比，canvas更依赖于分辨率，不支持事件处理器，文本渲染能力弱，比较适合密集型游戏，其中的许多对象会被频繁绘制，而svg则比较适用于类似谷歌地图带有大型渲染区域的应用程序。
 
+#### 9、meta 元标签基础知识
+
+> 将窗口调整为设备窗口，并禁止用户缩放
+
+```html
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no"
+忽略页面中的数字识别为电话号码,Android平台对邮箱的识别
+<meta name="format-detection",content="telephone=no">
+<meta name="format-detection",content="email=no">
+```
+
+> 当网站添加到主屏幕快速启动方式,以及顶部导航条样式
+
+```html
+<meta name="apple-mobile-wep-app-capable",content="yes">
+<meta name="apple-mobile-web-app-status-bar-sytle",content="black">
+```
+
+
+
+
+
+### 前端安全
+
+#### 0.谈谈对前端安全的理解，有什么，怎么防范
+
+前端安全问题主要有XSS、CSRF攻击
+
+- XSS：跨站脚本攻击
+  它允许用户将恶意代码植入到提供给其他用户使用的页面中，可以简单的理解为一种javascript代码注入。
+- XSS的防御措施：
+  - 过滤转义输入输出
+  - 避免使用eval、new Function等执行字符串的方法，除非确定字符串和用户输入无关
+  - 使用cookie的httpOnly属性，加上了这个属性的cookie字段，js是无法进行读写的
+  - 使用innerHTML、document.write的时候，如果数据是用户输入的，那么需要对象关键字符进行过滤与转义
+- CSRF：跨站请求伪造
+  其实就是网站中的一些提交行为，被黑客利用，在你访问黑客的网站的时候进行操作，会被操作到其他网站上
+- CSRF防御措施：
+  - 检测http referer是否是同域名
+  - 避免登录的session长时间存储在客户端中
+  - 关键请求使用验证码或者token机制
+- 其他的一些攻击方法还有HTTP劫持、界面操作劫持
+
+
+
+### webpack
+
+#### 2.webpack.load的原理
+
+​	loaders是你用在app源码上的转换元件。他们是用node.js运行的，把源文件作为参数，返回新的资源的函数。
