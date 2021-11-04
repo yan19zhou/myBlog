@@ -190,7 +190,77 @@ let state = new Proxy(obj,{
 state.name = "wusi"// 改变属性值打印结果
 ```
 
+setup sugar
 
+##### css
+
+>moudle 样式模块化
+
+```typescript
+<div :class="$style.logo"></div>
+<div :class="classes.logo"></div>
+<script setup>
+import classes from './App.module.css' //加载模块化css文件
+
+// 默认, 返回 <style module> 中的类
+useCssModule()
+
+// 命名, 返回 <style module="classes"> 中的类
+useCssModule('classes')
+
+// 在css中可用v-bind动态绑定属性值
+const theme = {
+  color: 'red'
+}
+</script>
+<style moudle>
+.logo{
+    color:v-bind('theme.color')
+}
+</style>
+// 使用模块里面的类名
+// 优点：每个类名会生成动态哈希
+```
+
+
+
+##### sfc+ts
+
+<script setup> 会编译成setup()函数，相当于他的一个语法糖，会暴露所有顶级定义给到组件类的template
+
+<script setup>中的定义不会暴露给$parent 或者通过ref获取的实例对象，如果要暴露 需要使用defineExpose
+
+```typescript
+<script setup lang="ts">
+    //定义type
+	type Course = {
+	id:number,
+	name:string
+	}
+	const courses = reactive<Course[]>([{id:1,name:'xiaoming'}]);
+
+    //使用类型声明时的默认 props 值
+
+    interface Props {
+      msg?: string
+      labels?: string[]
+    }
+
+    const props = withDefaults(defineProps<Props>(), {
+      msg: 'hello',
+      labels: () => ['one', 'two']
+    })
+    // 使用emit
+    const emits = defineEmits(['update:modelValue'])
+    emits('update:modelValue',args);
+
+    // 使用slots 和attrs
+    import { useSlots, useAttrs } from 'vue'
+
+    const slots = useSlots()
+    const attrs = useAttrs()
+</script>
+```
 
 
 

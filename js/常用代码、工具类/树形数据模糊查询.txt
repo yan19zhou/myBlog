@@ -1,6 +1,6 @@
 > 根据中文
 
-```
+```javascript
 const rebuildData = (value, arr) => {
       let newarr = [];
       arr.forEach(element => {

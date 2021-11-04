@@ -17,7 +17,7 @@ filterNode(value, data) {
 >
 > ​			2.子集多选：添加一个属性用来存放前一个选择的数据，对比数据得到新添加的节点，再用新添加的节点替换之前的同级节点		
 
-```
+```javascript
    data(){
        return {
            prePersonTypes:[]

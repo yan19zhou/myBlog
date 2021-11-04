@@ -1,19 +1,23 @@
 ##### 钩子
 ###### 全局钩子
-    beforeEach
-    afterEach
+```js
+beforeEach
+afterEach
+```
 
 ##### 导航守卫
-    参数 to  from next
-    全局钩子 beforeEach(全局前置守卫)， beforeResolve(全局解析守卫)， afterEach(后置钩子，不会接收next函数)
-    路由钩子  beforeEnter  beforeLeave
-    组件内钩子  beforeRouteEnter beforeRouteLeave  beforeRouteUpdate
-    beforeRouteEnter(to,from,next){
-        //此时组件对象没有创建，只能通过next中的参数vm来获取组件对象
-        next(vm=>{
+```js
+参数 to  from next
+全局钩子 beforeEach(全局前置守卫)， beforeResolve(全局解析守卫)， afterEach(后置钩子，不会接收next函数)
+路由钩子  beforeEnter  beforeLeave
+组件内钩子  beforeRouteEnter beforeRouteLeave  beforeRouteUpdate
+beforeRouteEnter(to,from,next){
+    //此时组件对象没有创建，只能通过next中的参数vm来获取组件对象
+    next(vm=>{
 
-        })
-    }
+    })
+}
+```
 导航被触发-->在失活的组件中调用beforeRouteLeave -->调用全局导航守卫beforeEach --->在重新调用的组件中触发beforeRouteUpdate
 -->在路由中触发beforeEnter -->解析异步路由--> 在激活组件中调用beforeRouteEnter -->beforResolve -->导航被确认
 --> dom更新-->用创建好的实例调用beforeRouteEnter中的next回调
@@ -68,7 +72,7 @@
 		1.使用query传参使用path来引入路由。
 		1.params是路由的一部分，必须要在路由后面添加参数名。query是拼接在url后面的参数，没有也没关系。
 		1.二者还有点区别，直白的来说query相当于get请求，页面跳转的时候，可以在地址栏看到请求参数，而params相当于post请求，参数不会再地址栏中显示
-		
+
 ##### 路由懒加载
 		1.es6 import
 			()=>import('@/components/helloWorld');
@@ -77,31 +81,32 @@
 			resolve =>require(['@/components/helloWorld'],resolve);
 		3.异步组件+webpack的ensure()方法。(按需加载+js打包分离)
 			r => require.ensure([],()=>r(require('@/components/helloWorld')),'helloWorld')
-		
+
 ##### vue官方的 懒加载+打包分离
 		用import的懒加载+webpaCkchunkName打包分离
 		1.需要安装 cnpm i -s @babel/plugin-syntax-dynamic-import
 		2.配置webpack，在webpack-base-conf.js的output加入chunkFilename: ‘[name].js’ 
 		
 		()=>import(/* webpackChunkName: "MyFile" */'@/components/helloWorld')
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+
+
+​		
+​		
+​		
+​		
+​		
+​		
+​		
+​		
+​		
+​		
+​		
+​		
+​		
+​		
+​		
+​		
+​		
+​		
+​		
+​		

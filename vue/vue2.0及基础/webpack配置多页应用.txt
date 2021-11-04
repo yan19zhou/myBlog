@@ -2,7 +2,7 @@
 
 . 核心思想：多个vue项目，一次webpack打包，使用url关联
 	webpcak操作：
-		1.多个入口{main1:'./user.main.js',main2:'./goods.main.js'}
+		- 1.多个入口{main1:'./user.main.js',main2:'./goods.main.js'}
 		2.多个html插件
 .  注意事项
 	// 文件名称：

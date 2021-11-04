@@ -1,5 +1,6 @@
 //store.js
 
+```js
 const state = {
     account:{
         name:''
@@ -41,3 +42,5 @@ methods:{
 mounted(){
     this.getNameA()
 }
+```
+
