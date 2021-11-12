@@ -1034,7 +1034,25 @@ import Digui from '@/compontents/digui'
 
 
 
-​	
+### 第九招Object.freeze
+
+> 在 Vue 的文档中介绍数据绑定和响应时，特意标注了对于经过 Object.freeze() 方法的对象无法进行更新响应
+
+> vue会对data中的属性进行代理，但是当发现这个data属性经过freeze处理之后将不会代理getter，setter方法。由此可以对一些静态组件进行冻结处理，从而提高性能
+
+```js
+const ojb={a:111}
+Object.freeze(ojb);
+
+export default {
+    data(){
+    	obj:obj
+	}    
+}
+
+```
+
+
 
 
 
