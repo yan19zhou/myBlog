@@ -1,3 +1,731 @@
-webpack
+## webpack
+
 1. 初始化：
 	npm init -yes
+
+### loader：
+
+> webpack本身只能打包js和json格式的文件，但实际项目中我们还有会css、scss、png、ts等其他文件，这时我们就需要使用loader来让它正确打包。
+
+**loader是处理编译js和json以外的文件时用的**
+
+#### 常见的loader：
+
+##### **postcss**：
+
+> postcss是一个用 JavaScript 工具和插件转换 CSS 代码的工具,
+>
+> 对于“ PostCSS”一词，我们可以替代地指两件事：
+>
+> 1.  该工具本身就是**PostCSS**[2]（运行时会得到什么）`npm install postcss`
+> 1.  该工具支持**的PostCSS插件生态系统**[3]，我们很多的实现都需要他的插件来帮忙实现：如：
+
+- postcss-autoprefixer 帮我们加上前缀的插件
+- postcss-pxtorem  自动转换px为rem的插件
+
+
+
+### plugin:
+
+> plugin可以在webpack运行到某个阶段时候，帮你做一些事情，类似react/vue中的生命周期。具体的某个插件（plugin）就是在webpack构建过程中的特定时机注入扩展逻辑来改变构建结果，作用于整个构建过程。
+
+
+
+#### babel
+
+- **babel**：babel 是一个 JavaScript 编译器，他可以让我们不再考虑兼容性，尽情的使用下一代的 JavaScript 语法编程。但是要实现具体的语法转换，我们还是要使用他的**插件**[4]才能实现
+
+- - 在babel7后为我们提供了**预设**[5]，可以让我们不再自己麻烦的对插件进行组合，想在什么环境运行就写什么预设即可（相当于每个预设选项中都帮你组合好了这个环境中需要用到的插件）
+
+- **es6+语法**：babel默认会转换语法，例如：let、const、() => {}、class
+
+- **es6+特性**：babel不会转换特性，特性需要js代码垫片来兼容低版本的浏览器。例如：Iterator、Generator、Set、Map、Proxy、Reflect、Symbol、Promise
+
+- **@babel/core**：@babel/core是babel的核心库，所有的核心api都在这个库里，这些api可供babel-loader调用
+
+- **@babel/preset-env**：这是一个预设的插件集合，包含了一组相关的插件，Bable中是通过各种插件来指导如何进行代码转换。该插件包含所有es6转化为es5的翻译规则
+
+- **@babel/polyfill**：@babel/preset-env只是提供了语法转换的规则，但是它并不能弥补浏览器缺失的一些新的功能，如一些内置的方法和对象，如Promise，Array.from等，此时就需要polyfill来做js的垫片，弥补低版本浏览器缺失的这些新功能。**注意：Babel 7.4.0该包将被废弃**
+
+- **core-js**：它是JavaScript标准库的polyfill，而且它可以实现按需加载。使用@babel/preset-env的时候可以配置core-js的版本和core-js的引入方式。**注意：@babel/polyfill依赖core-js**
+
+- **regenerator-runtime**：提供generator函数的转码
+
+### 搭建webpack项目
+
+#### 初始化package.json 文件
+
+```js
+// 初始化package.json 文件
+npm init
+```
+
+#### 安装webpack、webpack-cli依赖
+
+```js
+yarn add webpack@4.44.2 webpack-cli@3.3.12 -D
+```
+
+
+
+#### 配置webpack.config.js
+
+- 实现加载css
+
+​		- 安装css-loader
+
+​        - 配置css-loader
+
+```js
+const path = require('path')
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'main.js',
+    path: path.resolve(__dirname, './dist') 
+  },
+  mode: "development",
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: "css-loader"
+      }
+    ]
+  }
+}
+```
+
+> 因为此时css中的内容只是被作为一段字符串引入了js中（相当于对css文件的内容进行了JSON.stringify）
+
+- 实现css效果展示
+
+   - - 安装style-loader
+     - 配置style-loader
+
+     ```js
+     const path = require('path')
+     module.exports = {
+       entry: './src/index.js',
+       output: {
+         filename: 'main.js',
+         path: path.resolve(__dirname, './dist') 
+       },
+       mode: 'development',
+       module: {
+         rules: [
+           {
+             test: /\.css$/,
+             use: ['style-loader', 'css-loader']
+           }
+         ]
+       }
+     }
+     ```
+
+     > *注意:，对同一种类型文件使用多个 loader的时候，use属性接收一个数组，并且从右向左执行。所以style-loader要写在css-loader前面运行webpack命令,此时css已经能正常显示效果
+
+- 实现css前缀自动补充
+
+- - autoprefixer是postcss工具的插件，所以我们需要安装postcss和postcss-loader安装postcss、postcss-loader、autoprefixer
+  - 配置postcss-loader和插件autoprefixer
+
+  ```js
+  const path = require('path')
+  module.exports = {
+    entry: './src/index.js',
+    output: {
+      filename: 'main.js',
+      path: path.resolve(__dirname, './dist') 
+    },
+    mode: 'development',
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: [
+            'style-loader', 
+            'css-loader', 
+            {
+              loader: 'postcss-loader',
+              options: {
+                postcssOptions: {
+                  plugins: [require('autoprefixer')]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  }
+  ```
+
+  > 当loader需要写配置的时候，我们可以把loader写成一个对象，loader属性就是要使用的loader名称，options属性就是这个loader的配置对象。autoprefixer是postcss的插件，所以autoprefixer的使用自然就要写在postcss-loader的配置中了因为postcss有自己的配置文件,所以这里还可以写成这样：
+
+  ```
+  // webpack.config.js
+  const path = require('path')
+  module.exports = {
+    entry: './src/index.js',
+    output: {
+      filename: 'main.js',
+      path: path.resolve(__dirname, './dist') 
+    },
+    mode: 'development',
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader', 'postcss-loader']
+        }
+      ]
+    }
+  }
+  
+  // 根目录下新建postcss.config.js文件
+  module.exports = {
+    plugins: [require('autoprefixer')],
+  }
+  ```
+
+  > 这里我们需要配置一下browserslist，否则插件不知道按照什么样的规则进行前缀补全
+
+  ```js
+  // 在package.json文件中添加
+  // 这里的意思表示目标浏览器为ie浏览器，并需要兼容到ie8以上
+  "browserslist": ["ie > 8"]
+  ```
+
+  
+
+- 实现css以文件形式导出
+
+> 随着项目的增大，我们不想把那么多的样式都放在style标签中，我们想用link标签引入，这时我们就需要使用**mini-css-extract-plugin**[7]
+
+- - 安装mini-css-extract-plugin
+
+  ```js
+  yarn add mini-css-extract-plugin -D
+  ```
+
+  - 配置mini-css-extract-plugin插件和它的loader
+
+  > 这时我们不需要style-loader了，我们要style-loader替换成MiniCssExtractPlugin.loader
+
+  ```js
+  const path = require('path')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  module.exports = {
+    entry: './src/index.js',
+    output: {
+      filename: 'main.js',
+      path: path.resolve(__dirname, './dist') 
+    },
+    mode: 'development',
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader', 
+            'postcss-loader'
+          ]
+        }
+      ]
+    },
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: "css/[name].css"
+      })
+    ]
+  }
+  // MiniCssExtractPlugin可以配置输出文件名
+  // [name]为占位符，引入的时候是什么名字，导出的时候就是什么名字
+  // css/表示导出到css文件夹下
+  ```
+
+  
+
+- 实现自动生成html文件
+
+- - 安装html-webpack-plugin
+
+  ```
+  yarn add html-webpack-plugin@4.5.2 -D
+  ```
+
+  - 配置html-webpack-plugin
+
+  ```js
+  const path = require('path')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  module.exports = {
+    entry: './src/index.js',
+    output: {
+      filename: 'main.js',
+      path: path.resolve(__dirname, './dist') 
+    },
+    mode: 'development',
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader', 
+            'postcss-loader'
+          ]
+        }
+      ]
+    },
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: "css/[name].css",
+      }),
+      new HtmlWebpackPlugin({
+        template: './src/index.html'
+      })
+    ]
+  }
+  ```
+
+  
+
+- 实现打包清空dist文件夹
+
+- - **clean-webpack-plugin**
+
+  ```js
+  const path = require('path')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+  module.exports = {
+    entry: './src/index.js',
+    output: {
+      filename: 'main.js',
+      path: path.resolve(__dirname, './dist') 
+    },
+    mode: 'development',
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader', 
+            'postcss-loader'
+          ]
+        }
+      ]
+    },
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: "css/[name].css",
+      }),
+      new HtmlWebpackPlugin({
+        template: './src/index.html'
+      }),
+      new CleanWebpackPlugin()
+    ]
+  }
+  ```
+
+  
+
+- 实现图片在js文件中引入
+
+- > 使用url-loader，当然你也可以使用file-loader。url-loader是file-loader的升级版，它内部也依赖了file-loader。**file-loader和url-loader在webpack5后都被废弃了，使用asset modules代替**安装url-loader和file-loader
+
+  ```
+  yarn add url-loader file-loader -D
+  ```
+
+  > **你可以会疑问为什么要装file-loader，因为url-loader依赖file-loader。若不装，当url-loader将图片转换为base64导入bundle时不会存在问题，但直接输出图片到dist文件夹下就会报错，告诉你缺少file-loader**配置url-loader
+
+  ```js
+  const path = require('path')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+  module.exports = {
+    entry: './src/index.js',
+    output: {
+      filename: 'main.js',
+      path: path.resolve(__dirname, './dist') 
+    },
+    mode: 'development',
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader', 
+            'postcss-loader'
+          ]
+        },
+        {
+          test: /\.(png|jpe?g|gif)$/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              name: '[name].[ext]',
+              limit: 1024 * 3
+            }
+          }
+        }
+      ]
+    },
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: "css/[name].css",
+      }),
+      new HtmlWebpackPlugin({
+        template: './src/index.html'
+      }),
+      new CleanWebpackPlugin()
+    ]
+  }
+  //[ext]表示导入时是什么格式，导出时就是什么格式
+  //limit表示图片大小的阈值，超过阈值的图片会被原封不动的放置到打包文件夹下（file-loader做的这件事情，在js中引入时会帮你生成一个地址，即打包后对应的访问地址），没有超过会处理成base64放在bundle文件中
+  
+  // 在入口文件引入图片
+  // index.js
+  import './index.css'
+  import mk85 from './assets/images/mk85.jpeg'
+  console.log(mk85) // mk85.jpeg
+  const img = document.createElement('img')
+  img.src = mk85
+  const BoxDiv = document.getElementsByClassName('box')
+  BoxDiv[0].appendChild(img)
+  ```
+
+  
+
+- 实现图片在css文件中引入
+
+  > 修改url-loader配置
+
+```js
+const path = require('path')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'main.js',
+    path: path.resolve(__dirname, './dist') 
+  },
+  mode: 'development',
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader', 
+          'postcss-loader'
+        ]
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            name: '[name].[ext]',
+            limit: 1024 * 3,
+            outputPath: "images/",
+            publicPath: "/images",
+          }
+        }
+      }
+    ]
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "css/[name].css",
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/index.html'
+    }),
+    new CleanWebpackPlugin()
+  ]
+}
+//outputPath表示输出的到哪里（file-loader提供的）
+
+//name: images/[name].[ext]这样写和用outputPath设置效果一样吗？在配合publicPath字段时不一样。所以当你不需要配置publicPath字段时，可以通过name设置输出路径（file-loader提供的）
+
+
+
+options: {
+name: '[name].[ext]',
+limit: 1024 * 3,
+outputPath: "images/",
+publicPath: "/images",
+}
+
+// 等价于
+
+options: {
+name: 'images/[name].[ext]',
+limit: 1024 * 3,
+publicPath: "/",
+}
+```
+
+
+
+- 实现webpack本地服务
+
+- - 安装webpack-dev-server
+
+  ```
+  yarn add webpack-dev-server -D
+  ```
+
+  ```js
+  const path = require('path')
+  const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  const HtmlWebpackPlugin = require('html-webpack-plugin')
+  const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+  
+  module.exports = {
+    entry: './src/index.js',
+    output: {
+      filename: 'main.js',
+      path: path.resolve(__dirname, './dist') 
+    },
+    mode: 'development',
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader', 
+            'postcss-loader'
+          ]
+        },
+        {
+          test: /\.(png|jpe?g|gif)$/,
+          use: {
+            loader: 'url-loader',
+            options: {
+              name: '[name].[ext]',
+              limit: 1024 * 3,
+              outputPath: "images/",
+              publicPath: "/images",
+            }
+          }
+        }
+      ]
+    },
+    devServer: {
+      open: true,
+      port: 8080,
+    },
+    plugins: [
+      new MiniCssExtractPlugin({
+        filename: "css/[name].css",
+      }),
+      new HtmlWebpackPlugin({
+        template: './src/index.html'
+      }),
+      new CleanWebpackPlugin()
+    ]
+  }
+  //只需要加上devServer配置即可
+  //open表示打开浏览器
+  //port表示服务的端口号
+  ```
+
+  
+
+- 实现多页面打包
+
+> 这里不需要src/index.js
+>
+> 新建一个webpack.multiple.config.js
+>
+> 新建src/pages/login/js/index.js
+>
+> 新建src/pages/main/js/index.js
+
+- - 安装glob，用于处理文件
+
+  ```
+  yarn add glob -D
+  ```
+
+  - 配置webpack.multiple.config.js
+
+```js
+const path = require('path')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const glob = require("glob")
+
+const setMpa = () => {
+  const entry = {}
+  const htmlwebpackplugins = []
+  const entryFiles = glob.sync(path.resolve(__dirname, "./src/pages/*/*/index.js"))
+  entryFiles.forEach((item) => {
+    const entryFile = item
+    const match = entryFile.match(/src\/pages\/(.*)\/js\/index\.js$/)
+    const pageName = match[1]
+    entry[pageName] = entryFile
+    htmlwebpackplugins.push(
+      new HtmlWebpackPlugin({
+        template: `./src/index.html`,
+        filename: `${pageName}.html`,
+        chunks: [pageName]
+      })
+    )
+  })
+
+  return {
+    entry,
+    htmlwebpackplugins,
+  }
+}
+const { entry, htmlwebpackplugins } = setMpa()
+module.exports = {
+  entry,
+  output: {
+    filename: '[name].js',
+    path: path.resolve(__dirname, './dist') 
+  },
+  mode: 'development',
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader', 
+          'postcss-loader'
+        ]
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            name: '[name].[ext]',
+            limit: 1024 * 3,
+            outputPath: "images/",
+            publicPath: "/images",
+          }
+        }
+      }
+    ]
+  },
+  devServer: {
+    open: true,
+    port: 8080,
+    hot: true
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "css/[name].css",
+    }),
+    new CleanWebpackPlugin(),
+    ...htmlwebpackplugins
+  ]
+}
+```
+
+### 实现一个loader
+
+- loader是一个函数
+- 不能使用箭头函数，因为要用到上下文的this
+- soure接收到的是待处理的文件源码
+- return处理后的文件源码，也是下一个loader接收到的文件源码
+
+```js
+// replaceLoader.js
+module.exports = function (soure) {
+  console.log(soure, this) // 这里可以自己打印看一下信息，内容太长我就不放进来了
+ return source.replace('hello webpack', "你好呀，webpack！")
+}
+```
+
+```js
+{
+  test: /\.js$/,
+  use: path.resolve(__dirname, './loader/replaceLoader.js')
+}
+```
+
+### 实现一个plugin
+
+> plugin是一个构造函数
+
+```js
+class PluginName {
+ constructor (options) {
+ }
+ apply(compiler) {
+ ...
+ }
+}
+// 这里一定要写apply方法，webpack会通过apply方法启动插件
+// PluginName可以写成普通function，apply必须挂载到原型对象上（PluginName.prototype）
+// class类中的apply不能写成箭头函数
+// webpack的compiler钩子[13]，查看钩子决定你的插件要在哪一步做什么
+```
+
+```js
+// 编写一个假的html-webpack-plugin，输出一个fake.html文件
+class HtmlPlugin {
+ constructor (options) {
+ }
+ apply(compiler) {
+  compiler.hooks.emit.tap('HtmlPlugin', (compolation) => {
+      const content = '<html><body>fake html</body></html>'
+      compolation.assets['fake.html'] = {
+        source: function () {
+          return content
+        },
+        size: function () {
+          return content.length
+        }
+      } 
+    })
+ }
+}
+module.exports = HtmlPlugin
+```
+
+### webpack中使用指纹策略
+
+```js
+filename: '[name].[hash].[ext]',
+```
+
+- hash：以项目为单位，项目内容改变了，则会生成新的hash，内容不变则hash不变
+
+- - 整个工程任何一个需要被打包的文件发生了改变，打包结果中的所有文件的hash值都会改变
+
+- chunkhash：以chunk为单位，当一个文件内容改变，则整个chunk组的模块hash都会改变
+
+- - 假设打包出口有a.123.js和c.123.js
+  - a文件中引入了b文件
+  - 修改了b文件的内容
+  - 重新的打包结果为a.111.js和c.123.js
+  - a的hash值会被影响，但是c的hash值不受影响
+
+- contenthash：以自身内容为单位，依赖不算
+
+- - 假设打包出口有a.123js和b.123.css
+  - a文件引入了b文件
+  - 修改了b文件的内容
+  - 重新打包结果为a.123.js和b.111.css
+  - a的hash值不受影响
