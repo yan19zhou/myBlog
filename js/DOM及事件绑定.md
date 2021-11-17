@@ -2,7 +2,8 @@
 
 ​	1.DOM(文档对象模型)是针对html和xml的一个API，通过DOM去改变文档；DOM可以理解为一个访问或操作HTML各种标签的实现标准
 ​	2.每一段HTML标记都可以用相应的节点来表示，一共有12种节点类型，都继承自node类型；(html元素有html元素节点，注释有注释节点，文档有文档节点)
-​	//node类型(基类型，所有节点都继承自他，所以所有节点都有一个共同的属性和方法)：
+
+​	node类型(基类型，所有节点都继承自他，所以所有节点都有一个共同的属性和方法)：
 ​	//常用节点名：nodeName，nodeValue
 ​		对于元素：nodeName为标签名，nodeValue为null；
 ​		对于文本：nodeName为“#Text”，nodeValue为文本的值；
