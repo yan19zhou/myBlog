@@ -1,10 +1,5 @@
 <!--
-
  * @Description: npm组件库发布过程
- * @Author: zhouy
- * @Date: 2022-03-05 15:36:27
- * @LastEditTime: 2022-03-05 16:02:40
- * @LastEditors: zhouy
 -->
 
 1. 开发组件
